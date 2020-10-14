@@ -3,7 +3,7 @@ import { isNil } from 'lodash';
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import Navbar from './components/navbar';
-import Home from './pages/home';
+import Main from './pages/Main';
 import Login from './pages/login';
 import Signup from './pages/signUp';
 import { LOADING, SET_USER, UNSET_USER } from './store/actions';
@@ -33,7 +33,8 @@ const App = () => {
 
       {state.user ? (
         <Switch>
-          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/" component={main} /> */}
+          <Route exact path="/" component={Main} />
         </Switch>
       ) : (
         <Switch>

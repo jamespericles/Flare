@@ -1,6 +1,6 @@
 {
-  "name": "mern_with_passport",
-  "version": "0.1.0",
+  "name": "flare",
+  "version": "1.0.0",
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {

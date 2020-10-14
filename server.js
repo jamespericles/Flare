@@ -1,9 +1,11 @@
 require('dotenv').config();
-
+// Requiring necessary npm packages
 const express = require('express');
 const mysql = require('mysql');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+
+// Requiring passport as we've configured it
 const passport = require('passport');
 
 const routes = require('./routes');

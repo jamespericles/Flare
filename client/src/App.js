@@ -35,6 +35,9 @@ const App = () => {
         <Switch>
           {/* <Route exact path="/" component={main} /> */}
           <Route exact path="/" component={Main} />
+          <Route path="/main" component={Main} />
+          
+
         </Switch>
       ) : (
         <Switch>

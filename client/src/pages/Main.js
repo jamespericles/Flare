@@ -1,6 +1,6 @@
 import React from "react";
 //! Core page layout components
-import Header from "../components/Header";
+import NavHead from "../components/NavHead";
 import Footer from "../components/Footer";
 import Menu from "../components/Menu";
 //! Key body routed components
@@ -18,17 +18,16 @@ const Main = (props) => {
 
     return (
         <div className="content-container" style={{ overflowY: "scroll" }}>
-            <Header />
+            <NavHead />
             <div className="container-fluid">
                 <h3>Logged In Successfully!  Now showing the main page.</h3>
                 <Menu />
                 <div className="container">
-                    <Route exact path={`${props.match.url}`} component={Dashboard} />
-                    <Route exact path={`${props.match.url}/dashboard`} component={Dashboard} />
-                    <Route exact path={`${props.match.url}/plans`} component={Plans} />
-                    <Route exact path={`${props.match.url}/groups`} component={Groups} />
-                    <Route exact path={`${props.match.url}/templates`} component={Templates} />
-                    <Route exact path={`${props.match.url}/profile`} component={Profile} />
+                    <Route exact path={`/main`} component={Dashboard} />
+                    <Route exact path={`/main/plans`} component={Plans} />
+                    <Route exact path={`/main/groups`} component={Groups} />
+                    <Route exact path={`/main/templates`} component={Templates} />
+                    <Route exact path={`/main/profile`} component={Profile} />
                 </div>
             </div>
             <Footer />

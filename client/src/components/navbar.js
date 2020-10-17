@@ -1,5 +1,6 @@
-import axios from 'axios';
+// This component is the simple navbar shown on the login/account create screens...
 import React from 'react';
+import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { LOADING, UNSET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
@@ -27,10 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link to="/" className="btn btn-link text-secondary">
-        <span className="text-secondary">home</span>
-      </Link>
+    <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#364156", color: "#E8c547" }}>
       <button
         className="navbar-toggler"
         type="button"
@@ -39,6 +37,7 @@ const Navbar = () => {
         aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        style={{ backgroundColor: "#00A8BA" }}
       >
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -47,19 +46,19 @@ const Navbar = () => {
           {state.user ? (
             <li className="nav-item active">
               <Link to="#" className="btn btn-link text-secondary" onClick={logout}>
-                <span className="text-secondary">logout</span>
+                <span className="text-secondary">Logout</span>
               </Link>
             </li>
           ) : (
             <>
               <li className="nav-item active">
-                <Link to="/login" className="btn btn-link text-secondary">
-                  <span className="text-secondary">login</span>
+                <Link to="/login" className="btn btn-link" style={{ color: "#E8c547", textDecoration: "none" }}>
+                  <span>Login</span>
                 </Link>
               </li>
               <li className="nav-item active">
-                <Link to="/signup" className="btn btn-link">
-                  <span className="text-secondary">sign up</span>
+                <Link to="/signup" className="btn btn-link" style={{ color: "#E8c547", textDecoration: "none" }}>
+                  <span>Sign up</span>
                 </Link>
               </li>
             </>

@@ -2,7 +2,8 @@ import axios from 'axios';
 import { isNil } from 'lodash';
 import React, { useEffect } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import Navbar from './components/navbar';
+// import Navbar from './components/navbar';
+// import Main from './pages/Main';
 import Main from './pages/Main';
 import Login from './pages/login';
 import Signup from './pages/signUp';
@@ -29,17 +30,14 @@ const App = () => {
 
   return (
     <div>
-      <Navbar />
-
       {state.user ? (
         <Switch>
           {/* <Route exact path="/" component={main} /> */}
           <Route exact path="/" component={Main} />
           <Route path="/main" component={Main} />
-          
-
         </Switch>
       ) : (
+        
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />

@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { LOGIN, LOGOUT, SET_USER, UNSET_USER } from './actions';
+import { LOGIN, LOGOUT, SET_USER, UNSET_USER, STORE, UPDATE, DELETE } from './actions';
+// import { GROUPS, TEMPLATES, PLANS, CONTACTS } from './dataTypes.js';
+
 
 const StoreContext = createContext();
 const { Provider } = StoreContext;
@@ -27,6 +29,28 @@ const reducer = (state, action) => {
         loading: false,
       };
 
+    case STORE:
+      return {
+        ...state,
+        [action.dataType]:
+          state[action.dataType].map(p => 
+            p.id === action.payload.id ? action.payload : p)
+      };
+
+    case UPDATE:
+      return {
+        ...state,
+        [action.dataType]: state[action.dataType].map(p =>
+          p.id === action.payload.id ? action.payload : p)
+      };
+
+    case DELETE:
+      return {
+        ...state,
+        [action.dataType]: state[action.dataType]
+        .filter(p => p.id !== action.payload)
+      };
+
     default:
       return state;
   }
@@ -45,4 +69,5 @@ const useStoreContext = () => {
   return useContext(StoreContext);
 };
 
+// Allows StoreProvider const to be used which contains 
 export { StoreProvider, useStoreContext };

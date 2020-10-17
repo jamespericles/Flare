@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import Navbar from '../components/navbar';
 import { useHistory } from 'react-router-dom';
 import { LOADING, SET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
+import Footer from '../components/Footer';
 
 const Login = () => {
   const [, /* state */ dispatch] = useStoreContext();
@@ -43,8 +45,10 @@ const Login = () => {
 
   return (
     <div className="text-center">
+      <Navbar />
       <h4>Login</h4>
-      <form className="form-signin">
+      <div style={{ margin: "0 3em 0 3em" }}>
+        <form className="form-signin">
         <label htmlFor="inputEmail" className="sr-only">
           Email address
         </label>
@@ -56,6 +60,7 @@ const Login = () => {
           placeholder="Email address"
           value={loginCreds.email}
           onChange={handleChange}
+          style={{ margin: "1em 0 1em 0" }}
         />
         <label htmlFor="inputPassword" className="sr-only">
           Password
@@ -68,11 +73,14 @@ const Login = () => {
           placeholder="Password"
           value={loginCreds.password}
           onChange={handleChange}
+          style={{ margin: "1em 0 1em 0" }}
         />
-        <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleSubmit}>
+        <button className="btn btn-lg btn-block" style={{ backgroundColor: "#E8C547" }} type="submit" onClick={handleSubmit}>
           Login
         </button>
       </form>
+    </div>
+      <Footer />
     </div>
   );
 };

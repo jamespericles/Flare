@@ -23,10 +23,7 @@ import { enableRipple } from '@syncfusion/ej2-base';
 enableRipple(true);
 
 export default class Main extends Component {
-    //open the sidebar
-    // openClick () {
-    //     this.Sidebar.openClick();
-    // };
+    
     render() {
         return (
             <div className="control-section sidebar-list">

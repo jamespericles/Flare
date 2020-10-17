@@ -33,6 +33,8 @@ const SignUp = () => {
       .catch((error) => {
         console.log('ERROR', error);
       });
+
+    setSignUpCreds({email: '', password: ''})
   };
 
   return (

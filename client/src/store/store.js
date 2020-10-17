@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { LOGIN, LOGOUT, SET_USER, UNSET_USER, STORE, UPDATE, DELETE } from './actions';
-// import { GROUPS, TEMPLATES, PLANS, CONTACTS } from './dataTypes.js';
 
 
 const StoreContext = createContext();

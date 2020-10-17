@@ -41,6 +41,8 @@ const Login = () => {
         console.log('login error: ');
         console.log(error);
       });
+
+      setLoginCreds({email: '', password: ''})
   };
 
   return (

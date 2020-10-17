@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import { LOADING, UNSET_USER } from '../store/actions';
+import { LOGOUT, UNSET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
 import { IconContext } from "../../../node_modules/react-icons";
 import { MdExitToApp } from '../../node_modules/react-icons/md';
@@ -15,7 +15,7 @@ import "./Sidebar/style.css";
     const logout = (event) => {
       event.preventDefault();
   
-      dispatch({ type: LOADING });
+      dispatch({ type: LOGOUT });
   
       axios
         .get('/api/users/logout')

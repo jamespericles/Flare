@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
       return;
     }
 
-    res.status(404).json({ status: 'error', message: 'User not found' });
+    res.status(404).json({ status: 'error', message: err.message });
   } else {
     res.json({ user: null });
   }
@@ -63,12 +63,12 @@ router.post('/signup', async function (req, res, next) {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
-      role: 'user',
+      // role: 'user',
       password: password,
       salt: salt,
     });
   } catch (err) {
-    return res.json({ status: 'error', message: 'Email address already exists.' });
+    return res.json({ status: 'error', message: err.message });
   }
 
   if (user) {
@@ -97,7 +97,7 @@ router.post('/login', function (req, res, next) {
     }
 
     if (!user) {
-      return res.json({ status: 'error', message: info.message });
+      return res.status(400).json({ status: 'error', message: info.message });
     }
 
     req.logIn(user, function (err) {

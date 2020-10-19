@@ -6,7 +6,7 @@ const { isValidEmail, isValidPassword } = require('../../utilities/authUtils');
 const router = express.Router();
 
 //? Added Contacts here:
-// const Contact = require('../../models').Contact;
+const Contact = require('../../models').Contact;
 //?---------------------
 
 
@@ -163,35 +163,38 @@ router.get('/logout', function (req, res) {
 //   }
 // });
 
-// router.post('/addcontact/:uid', async function (req, res, next) {
-//   let contact = {};
+router.post('/addcontact/:uid', async function (req, res, next) {
+  let contact = {};
 
-//   contact = await Contact.findOne({
-//       where: {
-//           nickname: req.body.nickname,
-//       },
-//   });
+  contact = await Contact.findOne({
+      where: {
+          users: req.params.uid,
+          nickname: req.body.nickname,
+          email: req.body.email,
+      },
+  });
 
-//   if(contact) {
-//       res
-//       .status(400)
-//       .json({ status: 'error', message: `You already have a contact with the nickname: ${req.body.nickname}` });
-//       return;
-//   } else {
-//       try {
-//           contact = await Contact.create({
-//               firstname: req.body.firstname,
-//               lastname: req.body.lastname,
-//               nickname: req.body.nickname,
-//               relationship: req.body.relationship,
-//               email: req.body.email,
-//               mobile: req.body.mobile,
-//           });
-//       } catch (err) {
-//           return res.json({ status: 'error', message: err.message });
-//       }
-//   }
-// })
+  if(contact) {
+      res
+      .status(400)
+      .json({ status: 'error', message: `You already have a contact with the nickname: ${req.body.nickname}` });
+      return;
+  } else {
+      try {
+          contact = await Contact.create({
+              firstname: req.body.firstname,
+              lastname: req.body.lastname,
+              nickname: req.body.nickname,
+              relationship: req.body.relationship,
+              email: req.body.email,
+              mobile: req.body.mobile,
+              users: req.params.uid
+          });
+      } catch (err) {
+          return res.json({ status: 'error', message: err.message });
+      }
+  }
+})
 
 //* MODULE EXPORTS ********************************
 //! Do not change module exports command. Required and functioning as expected.

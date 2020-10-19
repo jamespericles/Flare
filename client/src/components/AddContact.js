@@ -8,9 +8,8 @@ import { LOADING } from '../store/actions';
 import { saveContact } from '../store/actionCreators';
 import { useStoreContext } from '../store/store';
 
-
 const AddContact = () => {
-    const [, /* state */ dispatch] = useStoreContext();
+    const [state, dispatch] = useStoreContext();
 
     const [newContact, setNewContact] = useState({
         firstname: '',
@@ -20,6 +19,8 @@ const AddContact = () => {
         email: '',
         mobile: '',
     });
+
+    console.log(state.user.id);
 
     // Handles updating the new contact whenever a change event or keytroke occurs.
     const handleChange = (event) => {
@@ -49,13 +50,14 @@ const AddContact = () => {
         dispatch({ type: LOADING });
 
         axios
-            .post('/api/users/addcontact', {
+            .post(`/api/contacts/add/${state.user.id}`, {
                 firstname: newContact.firstname,
                 lastname: newContact.lastname,
                 nickname: newContact.nickname,
                 relationship: newContact.relationship,
                 email: newContact.email,
                 mobile: newContact.mobile,
+                users: state.user.id
             })
             .then((response) => {
                 console.log (`posted firstname: ${newContact.firstname}`);
@@ -64,6 +66,7 @@ const AddContact = () => {
                 console.log (`posted relationship: ${newContact.relationship}`);
                 console.log (`posted email: ${newContact.email}`);
                 console.log (`posted mobile: ${newContact.mobile}`);
+                console.log (`posted users(the user id): ${state.user.id}`)
                 if (response.status === 200) {
                     dispatch(saveContact(newContact))
                 };

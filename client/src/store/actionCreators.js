@@ -1,5 +1,5 @@
 import { GROUPS, TEMPLATES, PLANS, CONTACTS } from "./dataTypes";
-import { STORE, UPDATE, DELETE } from "./actions";
+// import { STORE, UPDATE, DELETE } from "./actions";
 
 let idCounter = 100;
 
@@ -22,13 +22,13 @@ export const saveContact = (contact) => {
 const createSaveEvent = (dataType, payload) => {
     if(!payload.id) {
         return {
-            type: STORE,
+            // type: STORE,
             dataType: dataType,
             payload: { ...payload, id: idCounter++ }
         }
     } else {
         return {
-            type: UPDATE,
+            // type: UPDATE,
             dataType: dataType,
             payload: payload
         }
@@ -37,22 +37,22 @@ const createSaveEvent = (dataType, payload) => {
 
 // DELETE ACTION CREATORS PER DATA TYPE
 export const deleteGroup = (group) => ({
-    type: DELETE,
+    // type: DELETE,
     dataType: GROUPS,
     payload: group.id
 })
 export const deleteTemplate = (template) => ({
-    type: DELETE,
+    // type: DELETE,
     dataType: TEMPLATES,
     payload: template.id
 })
 export const deletePlan = (plan) => ({
-    type: DELETE,
+    // type: DELETE,
     dataType: PLANS,
     payload: plan.id
 })
 export const deleteContact = (contact) => ({
-    type: DELETE,
+    // type: DELETE,
     dataType: CONTACTS,
     payload: contact.id
 })

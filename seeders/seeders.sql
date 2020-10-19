@@ -1,0 +1,6 @@
+-- NEED: seeder for the following tables:
+-- users - at least 3
+-- templates - at least 3-4 per user (min. 12 total)
+-- plans - at least 2 per user (min. 6 total)
+-- contacts - at least 6 per user (min. 18 total)
+-- groups - at least 2  per user (min. 6 total)

@@ -23,6 +23,7 @@ const App = () => {
         history.push('/');
       } else {
         dispatch({ type: UNSET_USER });
+        alert(`Failure to get user, staying on login page.`);
         history.push('/login');
       }
     });

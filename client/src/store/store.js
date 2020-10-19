@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { LOGIN, LOGOUT, SET_USER, UNSET_USER, STORE, UPDATE, DELETE } from './actions';
+import { LOGIN, LOGOUT, LOADING, SET_USER, UNSET_USER, STORE, UPDATE, DELETE } from './actions';
 
 
 const StoreContext = createContext();
@@ -13,6 +13,14 @@ const reducer = (state, action) => {
         ...state,
         loading: true,
       };
+    
+      // Added New/ Not in original modal
+    case LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+      // ----- Added New/... END //*
 
     case SET_USER:
       return {

@@ -33,11 +33,11 @@ export default class Main extends Component {
                         <Sidebar />
                         
                         <div>
-                                        <Route exact path={`/main`} component={Dashboard} />
-                                        <Route exact path={`/main/plans`} component={Plans} />
-                                        <Route exact path={`/main/groups`} component={Groups} />
-                                        <Route exact path={`/main/templates`} component={Templates} />
-                                        <Route exact path={`/main/profile`} component={Profile} />
+                            <Route exact path={`/main`} component={Dashboard} />
+                            <Route exact path={`/main/plans`} component={Plans} />
+                            <Route exact path={`/main/groups`} component={Groups} />
+                            <Route exact path={`/main/templates`} component={Templates} />
+                            <Route exact path={`/main/profile`} component={Profile} />
                         </div>
                         <Footer />
                     </div>

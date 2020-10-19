@@ -35,7 +35,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    // await queryInterface.createTable('Contacts', {
+    // await queryInterface.createTable('contacts', {
     //   id: {
     //     allowNull: false,
     //     autoIncrement: true,

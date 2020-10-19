@@ -1,5 +1,23 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { LOGIN, LOGOUT, LOADING, SET_USER, UNSET_USER, STORE, UPDATE, DELETE } from './actions';
+import { 
+  LOGIN, 
+  LOGOUT, 
+  LOADING, 
+  SET_USER, 
+  UNSET_USER, 
+  SAVE_CONTACT,
+  SAVE_GROUP,
+  SAVE_PLAN,
+  SAVE_TEMPLATE,
+  UPDATE_CONTACT,
+  UPDATE_GROUP,
+  UPDATE_PLAN,
+  UPDATE_TEMPLATE,
+  DELETE_CONTACT,
+  DELETE_GROUP,
+  DELETE_PLAN,
+  DELETE_TEMPLATE
+} from './actions';
 
 
 const StoreContext = createContext();
@@ -36,27 +54,78 @@ const reducer = (state, action) => {
         loading: false,
       };
 
-    case STORE:
+    case SAVE_CONTACT:
       return {
         ...state,
-        [action.dataType]:
-          state[action.dataType].map(p => 
-            p.id === action.payload.id ? action.payload : p)
+        contact: action.contact
+      };
+    
+    case UPDATE_CONTACT:
+    return {
+      ...state,
+      contact: action.contact
+    };
+
+    case DELETE_CONTACT:
+      return {
+        ...state,
+        contact: action.contact,
       };
 
-    case UPDATE:
+    case SAVE_GROUP:
+    return {
+      ...state,
+      group: action.group
+    };
+    
+    case UPDATE_GROUP:
+    return {
+      ...state,
+      group: action.group
+    };
+
+    case DELETE_GROUP:
       return {
         ...state,
-        [action.dataType]: state[action.dataType].map(p =>
-          p.id === action.payload.id ? action.payload : p)
+        group: action.group,
       };
 
-    case DELETE:
+    case SAVE_PLAN:
       return {
         ...state,
-        [action.dataType]: state[action.dataType]
-        .filter(p => p.id !== action.payload)
+        plan: action.plan
       };
+    
+    case UPDATE_PLAN:
+    return {
+      ...state,
+      plan: action.plan
+    };
+
+    case DELETE_PLAN:
+      return {
+        ...state,
+        plan: action.plan,
+      };
+    
+    case SAVE_TEMPLATE:
+      return {
+        ...state,
+        template: action.template
+      };
+    
+    case UPDATE_TEMPLATE:
+    return {
+      ...state,
+      template: action.template
+    };
+
+    case DELETE_TEMPLATE:
+      return {
+        ...state,
+        template: action.template,
+      };
+
 
     default:
       return state;
@@ -66,6 +135,10 @@ const reducer = (state, action) => {
 const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
     user: null,
+    contact: null,
+    group: null,
+    plan: null,
+    template: null,
     loading: false,
   });
 

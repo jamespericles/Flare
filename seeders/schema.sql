@@ -55,6 +55,7 @@ CREATE TABLE `groups` (
     `groupname` VARCHAR(255),
     `users` INT,
     `contacts` INT,
+    `plans` INT,
     `createdAt` DATETIME,
     `updatedAt` DATETIME,
     PRIMARY KEY (`id`),
@@ -74,12 +75,21 @@ CREATE TABLE `plans` (
     `executeplan` BOOLEAN,
     `users` INT,
     `contacts` INT,
+    `groups` INT,
     `createdAt` DATETIME,
     `updatedAt` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`users`) REFERENCES users(`id`),
     FOREIGN KEY (`contacts`) REFERENCES contacts(`id`)
 );
+
+-- Add foreign key for plans to groups for many:many relationship--
+ALTER TABLE `groups`
+ADD FOREIGN KEY (`plans`) REFERENCES plans(`id`);
+
+-- Add foreign key for groups to plans for many:many relationship --
+ALTER TABLE `plans`
+ADD FOREIGN KEY (`groups`) REFERENCES `groups`(`id`);
 
 -- Create templates table --
 CREATE TABLE `templates` (
@@ -88,9 +98,13 @@ CREATE TABLE `templates` (
     `val` VARCHAR(2000),
     `users` INT,
     `contacts` INT,
+    `groups` INT,
+    `plans` INT,
     `createdAt` DATETIME,
     `updatedAt` DATETIME,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`users`) REFERENCES users(`id`),
-    FOREIGN KEY (`contacts`) REFERENCES contacts(`id`)
+    FOREIGN KEY (`contacts`) REFERENCES contacts(`id`),
+    FOREIGN KEY (`groups`) REFERENCES `groups`(`id`),
+    FOREIGN KEY (`plans`) REFERENCES plans(`id`)
 );

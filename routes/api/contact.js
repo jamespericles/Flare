@@ -12,6 +12,7 @@ const Contact = require('../../models').Contact;
 
 // CONTACT ROUTES
 
+// GET ALL CONTACTS BASED ON USERID
 // e.g. API address: localhost:3000/api/contacts/getall/1
 router.get('/getall/:userid', async (req, res) => {
     // let contacts = empty object
@@ -35,6 +36,7 @@ router.get('/getall/:userid', async (req, res) => {
   }
 });
 
+// GET ONE CONTACT BASED ON USER NICKNAME
 // e.g. API address: localhost:3000/api/contacts/getone/1
 router.get('/getone/:nickname', async (req, res) => {
     // let contact = empty object
@@ -58,7 +60,7 @@ router.get('/getone/:nickname', async (req, res) => {
   }
 });
 
-
+// ADD A NEW CONTACT
 // e.g. API address: localhost:3000/api/contacts/add/1
 router.post('/add/:uid', async function (req, res) {
   let contact = {};
@@ -87,6 +89,7 @@ router.post('/add/:uid', async function (req, res) {
     }
 });
 
+// UPDATE A CONTACT
 // e.g. API address: localhost:3000/api/contacts/update/1/3
 router.put('/update/:userid/:contactid', async function (req, res) {
     let contact = {}
@@ -123,6 +126,7 @@ router.put('/update/:userid/:contactid', async function (req, res) {
     }
 });
 
+// DELETE A CONTACT
 // e.g. API address: localhost:3000/api/contacts/update/1/3
 router.delete('/delete/:userid/:contactid', async function (req, res) {
     let contact = {}

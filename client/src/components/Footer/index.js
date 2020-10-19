@@ -1,3 +1,4 @@
+// Footer component for the full-width page foot
 import React, { Component } from 'react'
 import './style.css'
 

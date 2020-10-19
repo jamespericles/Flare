@@ -1,0 +1,2 @@
+// Component that maps through the contacts in the db associated with the user and renders them
+// provides filtering or viewing options for contacts by group, contacts and associated templates, contacts by plan

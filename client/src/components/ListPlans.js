@@ -1,0 +1,2 @@
+// Component that maps through the plans in the db associated with the user and renders them
+// provides filtering or viewing options for plans by contacts in them, plans by groups associated with them

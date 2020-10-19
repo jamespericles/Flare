@@ -1,74 +1,87 @@
-DROP DATA IF EXISTS flareDB;
-CREATE database flareDB;
-USE flareDB;
+DROP DATABASE flare;
+create Database flare;
+use flare;
 
-CREATE TABLE users (
-    id INT NOT NULL AUTO_INCREMENT,
-    userUserName VARCHAR(255),
-    -- going to need solution for emails that contain numbers
-    userEmail VARCHAR(255),
-    -- assuming we're using bcrypt to hash
-    userPassword CHAR(60),
-    userFirst VARCHAR(255),
-    userLast VARCHAR(255),
-    userFull VARCHAR(255),
-    -- going to need to work on how we store address
-    streetNumber INT,
-    streetName VARCHAR(255),
-    userCity VARCHAR(255),
-    userState VARCHAR(255),
-    userZip INT,
-    userPhone INT,
-    -- user image
-    -- user groups
-    -- user contacts
-    -- user templates
-    -- user safety plans
-    -- user create date
-    -- user modified data
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) unsigned NOT NULL,
+  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `users` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `first_name` VARCHAR(255),
+    `last_name` VARCHAR(255),
+    `email` VARCHAR(255),
+    `address1` VARCHAR(255),
+    `address2` VARCHAR(255),
+    `city` VARCHAR(255),
+    `state` VARCHAR(255),
+    `zip` VARCHAR(255),
+    `mobile` VARCHAR(255),
+    `salt` VARCHAR(255),
+    `password` VARCHAR(255),
+    `last_login` DATETIME,
+    `createAt` DATETIME,
+    `updatedAt` DATETIME,
+    PRIMARY KEY (`id`)
 );
 
-CREATE TABLE contacts (
-    id INT NOT NULL AUTO_INCREMENT,
-    contactNickname VARCHAR(255),
-    contactName VARCHAR(255),
-    -- going to need a solution for emails that contain numbers
-    contactEmail VARCHAR (255),
-    contactPhone INT,
-    contactRelationship VARCHAR(255),
-    -- contact image
-    -- contact groups
-    -- contact create date
-    -- contact date modified
-    FOREIGN KEY(users) REFERENCES users(id),
-)
+CREATE TABLE `contacts` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `firstname` VARCHAR(255),
+    `lastname` VARCHAR(255),
+    `nickname` VARCHAR(255),
+    `relationship` VARCHAR(255),
+    `email` VARCHAR(255),
+    `mobile` VARCHAR(20),
+    `users` INT,
+    `createAt` DATETIME,
+    `updatedAt` DATETIME,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY(`users`) REFERENCES users(`id`)
+);
 
-CREATE TABLE group (
-    id INT NOT NULL AUTO_INCREMENT,
-    groupName VARCHAR(255),
-    -- groupMembers
-    -- groupCreateDate
-    -- groupmModifiedDate
-    FOREIGN KEY (users) REFERENCES users(id),
-    FOREIGN KEY (contacts) REFERENCES contacts(id),
-)
+CREATE TABLE `groups` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `groupname` VARCHAR(255),
+    `users` INT,
+    `contacts` INT,
+    `createAt` DATETIME,
+    `updatedAt` DATETIME,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`users`) REFERENCES users(`id`),
+    FOREIGN KEY (`contacts`) REFERENCES contacts(`id`)
+);
 
-CREATE TABLE safetyPlan (
-    id INT NOT NULL AUTO_INCREMENT,
-    spNickname VARCHAR(255),
-    -- spImage
-    spIsActive BOOLEAN,
-    -- spActiveType
-    spIsHome BOOLEAN,
-    spDurationBeforeExecution INT,
-    -- spActivateStateTime
-    -- spActivateEndTime
-    -- spExecutePlan
-    -- spGroupsAssigned
-    -- spContactMethod
-    -- spCreateDate
-    -- spModifiedDate
-    FOREIGN KEY (users) REFERENCES users(id),
-    FOREIGN KEY (contacts) REFERENCES contacts(id)
+CREATE TABLE `plans` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `planname` VARCHAR(255),
+	`isActive` BOOLEAN,
+    `isHome` BOOLEAN,
+    `durationBeforeExecution` INT,
+    `activatestart` TIME,
+    `activateend` TIME,
+    `executeplan` BOOLEAN,
+    `users` INT,
+    `contacts` INT,
+    `createAt` DATETIME,
+    `updatedAt` DATETIME,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`users`) REFERENCES users(`id`),
+    FOREIGN KEY (`contacts`) REFERENCES contacts(`id`)
+);
 
-)
+CREATE TABLE `templates` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `nickname` VARCHAR(255),
+    `val` VARCHAR(2000),
+    `users` INT,
+    `contacts` INT,
+    `createAt` DATETIME,
+    `updatedAt` DATETIME,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`users`) REFERENCES users(`id`),
+    FOREIGN KEY (`contacts`) REFERENCES contacts(`id`)
+);

@@ -1,3 +1,4 @@
+// Placeholder container that displays the ListGroups and AddGroup containers
 import React, { Component } from 'react'
 import AddContact from './AddContact'
 

@@ -1,3 +1,4 @@
+// Component to handle top menu bar and sidedrawer navigation
 import { SidebarComponent } from '@syncfusion/ej2-react-navigations';
 import React, { Component } from 'react';
 import Logout from '../logout';

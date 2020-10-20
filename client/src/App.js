@@ -22,7 +22,7 @@ const App = () => {
     axios.get('/api/users').then((response) => {
       if (!isNil(response.data.user)) {
         dispatch({ type: SET_USER, user: response.data.user });
-        history.push('/main');
+        history.push('/');
       } else {
         dispatch({ type: UNSET_USER });
         console.log(`Failure to get user, staying on login page.`);
@@ -36,8 +36,7 @@ const App = () => {
       {state.user ? (
         <Switch>
           {/* <Route exact path="/" component={main} /> */}
-          <Route exact path="/" component={Main} />
-          <Route path="/main" component={Main} />
+          <Route path="/" component={Main} />
         </Switch>
       ) : (
         

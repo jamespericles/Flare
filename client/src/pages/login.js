@@ -7,7 +7,7 @@ import { useStoreContext } from '../store/store';
 import Footer from '../components/Footer';
 
 const Login = () => {
-  const [, /* state */ dispatch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
   const history = useHistory();
 
   const [loginCreds, setLoginCreds] = useState({
@@ -17,7 +17,6 @@ const Login = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setLoginCreds({ ...loginCreds, [name]: value });
   };
 
@@ -26,6 +25,7 @@ const Login = () => {
 
     dispatch({ type: LOADING });
 
+    // Handle Login
     axios
       .post('/api/users/login', {
         email: loginCreds.email,

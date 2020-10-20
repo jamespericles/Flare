@@ -30,12 +30,12 @@ const AddContact = () => {
         // Sets a generic name and value so that newContact updates whenever any field is updated, and updates the field being with the current value of that field.
         const { name, value } = event.target;
         // Spreads newContact so we don't overwrite the existing info of the field(s) and then sets the value of the field regardless of the value and name of the field (since set generically).
-        console.log (`firstname in form: ${newContact.firstname}`);
-        console.log (`lastname in form: ${newContact.lastname}`);
-        console.log (`nickname in form: ${newContact.nickname}`);
-        console.log (`relationship in form: ${newContact.relationship}`);
-        console.log (`email in form: ${newContact.email}`);
-        console.log (`mobile in form: ${newContact.mobile}`);
+        // console.log (`firstname in form: ${newContact.firstname}`);
+        // console.log (`lastname in form: ${newContact.lastname}`);
+        // console.log (`nickname in form: ${newContact.nickname}`);
+        // console.log (`relationship in form: ${newContact.relationship}`);
+        // console.log (`email in form: ${newContact.email}`);
+        // console.log (`mobile in form: ${newContact.mobile}`);
         setNewContact({ ...newContact, [name]: value });
 
     }
@@ -44,12 +44,12 @@ const AddContact = () => {
     const handleSubmit = (event) => {
         // Prevents page refresh thereby losing info
         event.preventDefault();
-        console.log (`submitted firstname: ${newContact.firstname}`);
-        console.log (`submitted lastname: ${newContact.lastname}`);
-        console.log (`submitted nickname: ${newContact.nickname}`);
-        console.log (`submitted relationship: ${newContact.relationship}`);
-        console.log (`submitted email: ${newContact.email}`);
-        console.log (`submitted mobile: ${newContact.mobile}`);
+        // console.log (`submitted firstname: ${newContact.firstname}`);
+        // console.log (`submitted lastname: ${newContact.lastname}`);
+        // console.log (`submitted nickname: ${newContact.nickname}`);
+        // console.log (`submitted relationship: ${newContact.relationship}`);
+        // console.log (`submitted email: ${newContact.email}`);
+        // console.log (`submitted mobile: ${newContact.mobile}`);
         dispatch({ type: LOADING });
 
         axios
@@ -63,13 +63,13 @@ const AddContact = () => {
                 users: state.user.id
             })
             .then((response) => {
-                console.log (`posted firstname: ${newContact.firstname}`);
-                console.log (`posted lastname: ${newContact.lastname}`);
-                console.log (`posted nickname: ${newContact.nickname}`);
-                console.log (`posted relationship: ${newContact.relationship}`);
-                console.log (`posted email: ${newContact.email}`);
-                console.log (`posted mobile: ${newContact.mobile}`);
-                console.log (`posted users(the user id): ${state.user.id}`)
+                // console.log (`posted firstname: ${newContact.firstname}`);
+                // console.log (`posted lastname: ${newContact.lastname}`);
+                // console.log (`posted nickname: ${newContact.nickname}`);
+                // console.log (`posted relationship: ${newContact.relationship}`);
+                // console.log (`posted email: ${newContact.email}`);
+                // console.log (`posted mobile: ${newContact.mobile}`);
+                // console.log (`posted users(the user id): ${state.user.id}`)
                 if (response.status === 200) {
                     dispatch(saveContact(newContact))
                 };
@@ -91,18 +91,19 @@ const AddContact = () => {
     
     return (    
         <div className = 'control-pane'>
-            <div className='control-section col-xs-12 col-sm-12 col-md-4'>
-                <h4 className="form-title">Add New Contact</h4>
+            <div className='control-section'>
+                <h6 className="form-title">Add New Contact</h6>
                 <div className='validation_wrapper'>
                     <div className="control_wrapper" id="control_wrapper">
                         <form id="addContact"  method="post">
-                            <div className="form-group" >
-                                <div className="e-float-input">
-                                    <label className="e-float-text e-label-top" htmlFor="fistname">First Name</label>
+                            <div className="form-group" style={{margin: "10px 0 10px 0"}}>
+                                <div className="e-float-input" >
                                     <input 
                                         type="text" 
                                         id="firstname" 
                                         name="firstname"
+                                        style={{width: "100%",}}
+                                        placeholder="First Name"
                                         value={newContact.firstname} 
                                         onChange={handleChange} 
                                     />
@@ -110,13 +111,14 @@ const AddContact = () => {
                                 </div>
                                 <div id="firstnameError"/>
                             </div>
-                            <div className="form-group" >
+                            <div className="form-group" style={{margin: "0 0 10px 0"}} >
                                 <div className="e-float-input">
-                                    <label className="e-float-text e-label-top" htmlFor="lastname">Last Name</label>
                                     <input 
                                         type="text" 
                                         id="lastname" 
                                         name="lastname"
+                                        style={{width: "100%"}}
+                                        placeholder="Last Name"
                                         value={newContact.lastname} 
                                         onChange={handleChange} 
                                     />
@@ -124,73 +126,72 @@ const AddContact = () => {
                                 </div>
                                 <div id="lastnameError"/>
                             </div>
-                            <div className="form-group" >
+                            <div className="form-group" style={{margin: "0 0 10px 0"}}>
                                 <div className="e-float-input">
-                                    <label className="e-float-text e-label-top" htmlFor="nickname">Nickname</label>
                                     <input 
                                         type="text" 
                                         id="nickname" 
                                         name="nickname"
+                                        style={{width: "100%"}}
+                                        placeholder="Nickname"
                                         value={newContact.nickname} 
                                         onChange={handleChange} 
                                     />
-                                    <span className="e-float-line"/>
                                 </div>
                                 <div id="nicknameError"/>
                             </div>
-                            <div className="form-group" >
+                            <div className="form-group" style={{margin: "0 0 10px 0"}}>
                                 <div className="e-float-input">
-                                    <label className="e-float-text e-label-top" htmlFor="relationship">Relationship</label>
                                     <input 
                                         type="text" 
                                         id="relationship" 
                                         name="relationship"
+                                        style={{width: "100%"}}
+                                        placeholder="Relationship (e.g. Father, Boyfriend, Neighbor)"
                                         value={newContact.relationship} 
                                         onChange={handleChange} 
                                     />
-                                    <span className="e-float-line"/>
                                 </div>
                                 <div id="relationshipError"/>
                             </div>
-                            <div className="form-group" >
+                            <div className="form-group" style={{margin: "0 0 10px 0"}}>
                                 <div className="e-float-input">
-                                    <label className="e-float-text e-label-top" htmlFor="email">Email Address</label>
                                     <input 
                                         type="email" 
                                         id="email" 
                                         name="email"
+                                        style={{width: "100%"}}
+                                        placeholder="Email address"
                                         value={newContact.email} 
                                         onChange={handleChange} 
                                     />
-                                    <span className="e-float-line"/>
                                 </div>
                                 <div id="emailError"/>
                             </div>
-                            <div className="form-group" >
+                            <div className="form-group" style={{margin: "0 0 10px 0"}}>
                                 <div className="e-float-input">
-                                    <label className="e-float-text e-label-top" htmlFor="mobile">Mobile</label>
                                     <input 
                                         type="text" 
                                         id="mobile" 
                                         name="mobile"
+                                        style={{width: "100%"}}
+                                        placeholder="Mobile Phone"
                                         value={newContact.mobile} 
                                         onChange={handleChange} 
                                     />
-                                    <span className="e-float-line"/>
                                 </div>
                                 <div id="mobileError"/>
                             </div>
-                        <br/>
-                        <br/>
                         <div className="submitBtn">
                             <button 
                                 className="submit-btn e-btn btn btn-lg btn-block" 
                                 id="submit-btn" 
                                 type="submit" 
+                                style={{width: "100%", height: "70px"}}
                                 style={{ backgroundColor: "#E8C547" }}
                                 onClick={handleSubmit}
                             >
-                                Add Contact
+                                <span style={{fontSize: "15px"}}>Add Contact</span>
                             </button>
                         </div>
                         </form>

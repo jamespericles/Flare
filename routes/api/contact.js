@@ -61,6 +61,7 @@ router.get('/getone/:nickname', async (req, res) => {
 });
 
 // ADD A NEW CONTACT
+//! NO MORE CHANGES TO "ADD A NEW CONTACT". FUNCTIONING CORRECTLY.
 // e.g. API address: localhost:3000/api/contacts/add/1
 router.post('/add/:uid', async function (req, res) {
   let contact = {};
@@ -88,6 +89,7 @@ router.post('/add/:uid', async function (req, res) {
         return;
     }
 });
+//! ----------------------------------------------------------------
 
 // UPDATE A CONTACT
 // e.g. API address: localhost:3000/api/contacts/update/1/3
@@ -127,7 +129,7 @@ router.put('/update/:userid/:contactid', async function (req, res) {
 });
 
 // DELETE A CONTACT
-// e.g. API address: localhost:3000/api/contacts/update/1/3
+// e.g. API address: localhost:3000/api/contacts/delete/1/3
 router.delete('/delete/:userid/:contactid', async function (req, res) {
     let contact = {}
     contact = await Contact.findOne({

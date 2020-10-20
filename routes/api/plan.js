@@ -162,7 +162,7 @@ router.put('/update/:userid/:planid', async function (req, res) {
 });
 
 // DELETE A PLAN
-// e.g. API address: localhost:3000/api/plans/update/1/3
+// e.g. API address: localhost:3000/api/plans/delete/1/3
 router.delete('/delete/:userid/:planid', async function (req, res) {
     let plan = {}
     plan = await Plan.findOne({

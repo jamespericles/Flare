@@ -10,6 +10,8 @@ import Signup from './pages/signUp';
 import { LOADING, SET_USER, UNSET_USER } from './store/actions';
 import { useStoreContext } from './store/store';
 
+
+
 const App = () => {
   const history = useHistory();
   const [state, dispatch] = useStoreContext();
@@ -20,7 +22,7 @@ const App = () => {
     axios.get('/api/users').then((response) => {
       if (!isNil(response.data.user)) {
         dispatch({ type: SET_USER, user: response.data.user });
-        history.push('/');
+        history.push('/main');
       } else {
         dispatch({ type: UNSET_USER });
         console.log(`Failure to get user, staying on login page.`);
@@ -45,6 +47,7 @@ const App = () => {
           <Redirect to="/login" />
         </Switch>
       )}
+      
     </div>
   );
 };

@@ -10,6 +10,8 @@ import { MdGroup } from '../../../node_modules/react-icons/md';
 import { MdContactMail } from '../../../node_modules/react-icons/md';
 import { MdDevicesOther } from '../../../node_modules/react-icons/md';
 import { MdAccountCircle } from '../../../node_modules/react-icons/md';
+import GetUserFirstName from '../SubComponents/GetUserFirstName';
+
 
 
 export default class Sidebar extends Component {
@@ -18,6 +20,7 @@ export default class Sidebar extends Component {
         this.closeClick = this.closeClick.bind(this);
         this.openClick = this.openClick.bind(this);
     }
+
     // Open the Sidebar
     openClick() {
         this.sidebarObj.show();
@@ -32,7 +35,7 @@ export default class Sidebar extends Component {
                 <div id="head">
                     <div className="text">Menu</div>
                     <span id="hamburger" className="e-icons menu" onClick={this.openClick}></span>
-                    <div className="header">Header Content</div>
+                    <div className="header">Welcome, <GetUserFirstName />! &nbsp; &nbsp; &nbsp; Ready to send up a <em>Flare</em>?</div>
                 </div> 
                 <SidebarComponent 
                         id="sidebar-menu" 
@@ -90,6 +93,7 @@ export default class Sidebar extends Component {
                             </li>
                             </ul>
                         </div>
+
                     </SidebarComponent>  
             </>
            );

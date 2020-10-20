@@ -1,3 +1,4 @@
+// Container that displays key profile fields and update functions for them
 import React, { Component } from 'react'
 
 export default class Profile extends Component {

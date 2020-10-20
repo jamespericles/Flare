@@ -1,3 +1,4 @@
+// Functional component to handle the log-out function
 import React from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";

@@ -1,3 +1,6 @@
+// Component to hold a contact addition/creation form; functionality for adding a contact
+// may weave in search and update functionality here if possible
+
 import axios from 'axios';
 import React, { useState } from 'react';
 // import { select } from '@syncfusion/ej2-base';

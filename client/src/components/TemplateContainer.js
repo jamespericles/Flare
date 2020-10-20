@@ -1,3 +1,4 @@
+// Container for template creation and template assignment components
 import React, { Component } from 'react'
 
 export default class Templates extends Component {

@@ -166,7 +166,7 @@ router.put('/update/:userid/:groupid', async function (req, res) {
 });
 
 // DELETE GROUP
-// e.g. API address: localhost:3000/api/groups/update/1/3
+// e.g. API address: localhost:3000/api/groups/delete/1/3
 router.delete('/delete/:userid/:groupid', async function (req, res) {
     let group = {}
     group = await Group.findOne({

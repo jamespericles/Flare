@@ -1,6 +1,3 @@
-// Component that maps through the templates in the db associated with the user and renders them
-// provides filtering or viewing options for Groups by contact and groups by plan
-
 // GROUP APIS:
 // GET ALL BY USER: /api/groups/getallbyuser/${state.user.id}
 // GET ALL BY CONTACT: /api/groups/getallbycontact/${state.user.id}/${state.contact.id}

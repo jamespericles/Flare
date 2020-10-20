@@ -11,7 +11,8 @@ import Groups from "../../components/GroupContainer";
 import Plans from "../../components/PlanContainer";
 import Templates from "../../components/TemplateContainer";
 import Profile from "../../components/ProfileContainer";
-import Footer from "../../components/Footer/index.js";
+import Footer from "../../components/Footer";
+import Navbar from 'react-bootstrap/Navbar'
 
 import Sidebar from "../../components/Sidebar";
 
@@ -30,7 +31,7 @@ export default class Main extends Component {
                 <div id="wrapper">
                     <div className="col-lg-12 col-sm-12 col-md-12">
                         
-                        <Sidebar />
+                        <Sidebar style={{ zIndex: "100" }}/>
                         
                         <div>
                             <Route exact path={`/main`} component={Dashboard} />
@@ -38,10 +39,12 @@ export default class Main extends Component {
                             <Route exact path={`/main/groups`} component={Groups} />
                             <Route exact path={`/main/templates`} component={Templates} />
                             <Route exact path={`/main/profile`} component={Profile} />
+                            
                         </div>
-                        <Footer />
+                        <Navbar className="mb-0 text-center" fixed="bottom pb-0 pl-0"><Footer/></Navbar>
                     </div>
                 </div>
+                
             </div>);
     }
     

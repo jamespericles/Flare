@@ -1,11 +1,11 @@
 .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+  /* position: sticky; */
+  /* left: 0; */
+  /* bottom: 0; */
+  width: 100% !important;
   height: 50px;
   background-color: #364156;
   color: white;
-  text-align: center;
+  /* text-align: center; */
   padding-top: 15px;
 }

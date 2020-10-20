@@ -12,35 +12,35 @@ INSERT INTO `contacts` (
     id, firstname, lastname, nickname, relationship, email, mobile, users, createdAt, updatedAt
 )
 VALUES
-(1, "Colin", "Shelton", "Colin", "Friend", "colin.shelton@aol.com", "1234567890", 1, 2000-01-01 00:00:00),
-(2, "Sean", "McGinnis", "Sean", "Friend", "sean.mcginnis@aol.com", "1234567890", 1, 2000-01-01 00:00:00),
-(3, "James", "Pericles", "James", "Friend", "james.pericles@aol.com", "1234567890", 1, 2000-01-01 00:00:00),
-(4, "Zach", "Rickards", "Zach", "Teacher", "zach.rickards@aol.com", "1234567890", 1, 2000-01-01 00:00:00),
-(5, "Carl", "Vega", "Carl", "Teacher", "carl.vega@aol.com", "1234567890", 1, 2000-01-01 00:00:00),
-(6, "Tim", "Nagorsky", "Tim", "Teacher", "tim.nagorsky.com", "1234567890", 1, 2000-01-01 00:00:00),
-(7, "Jim", "Pericles", "Jim", "Dad", "jim.pericles@aol.com", "1234567890", 2, 2000-01-01 00:00:00),
-(8, "Joann", "Pericles", "Jo", "Mom", "joann.pericles@aol.com", "1234567890", 2, 2000-01-01 00:00:00),
-(9, "Carl", "Keightley", "Carl", "Brother", "carl.keightley@aol.com", "1234567890", 2, 2000-01-01 00:00:00),
-(10, "Anna", "Keightley", "Anna", "Sister", "anna.keightley@aol.com", "1234567890", 2, 2000-01-01 00:00:00),
-(11, "Rasheda", "Assopardi", "Gran", "Gradma", "ra.ass@aol.com", "1234567890", 2, 2000-01-01 00:00:00),
-(12, "Carl", "Assopardi", "Grandad", "Grandad", "carl.ass@aol.com", "1234567890", 2, 2000-01-01 00:00:00),
-(13, "Odin", "Pericles", "Odin", "Best Friend", "odin.pericles@aol.com", "1234567890", 3, 2000-01-01 00:00:00),
-(14, "Olive", "Pericles", "Olive", "Annoying", "olive.pericles@aol.com", "1234567890", 3, 2000-01-01 00:00:00),
-(15, "Conner", "Redmond", "Conner", "Friend", "conner.redmond@aol.com", "1234567890", 3, 2000-01-01 00:00:00),
-(16, "Steve", "Jobs", "Steve", "Colleague", "steve.jobs@aol.com", "1234567890", 3, 2000-01-01 00:00:00),
-(17, "Bill", "Gates", "Bill", "Colleague", "bill.gates@aol.com", "1234567890", 3, 2000-01-01 00:00:00),
-(18, "Amanda", "Hartman", "Amanda", "Friend", "amanada.hartman@aol.com", "1234567890", 3, 2000-01-01 00:00:00);
+(1, "Colin", "Shelton", "Colin", "Friend", "colin.shelton@aol.com", "1234567890", 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(2, "Sean", "McGinnis", "Sean", "Friend", "sean.mcginnis@aol.com", "1234567890", 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(3, "James", "Pericles", "James", "Friend", "james.pericles@aol.com", "1234567890", 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(4, "Zach", "Rickards", "Zach", "Teacher", "zach.rickards@aol.com", "1234567890", 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(5, "Carl", "Vega", "Carl", "Teacher", "carl.vega@aol.com", "1234567890", 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(6, "Tim", "Nagorsky", "Tim", "Teacher", "tim.nagorsky.com", "1234567890", 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(7, "Jim", "Pericles", "Jim", "Dad", "jim.pericles@aol.com", "1234567890", 2, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(8, "Joann", "Pericles", "Jo", "Mom", "joann.pericles@aol.com", "1234567890", 2, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(9, "Carl", "Keightley", "Carl", "Brother", "carl.keightley@aol.com", "1234567890", 2, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(10, "Anna", "Keightley", "Anna", "Sister", "anna.keightley@aol.com", "1234567890", 2, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(11, "Rasheda", "Assopardi", "Gran", "Gradma", "ra.ass@aol.com", "1234567890", 2, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(12, "Carl", "Assopardi", "Grandad", "Grandad", "carl.ass@aol.com", "1234567890", 2, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(13, "Odin", "Pericles", "Odin", "Best Friend", "odin.pericles@aol.com", "1234567890", 3, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(14, "Olive", "Pericles", "Olive", "Annoying", "olive.pericles@aol.com", "1234567890", 3, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(15, "Conner", "Redmond", "Conner", "Friend", "conner.redmond@aol.com", "1234567890", 3, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(16, "Steve", "Jobs", "Steve", "Colleague", "steve.jobs@aol.com", "1234567890", 3, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(17, "Bill", "Gates", "Bill", "Colleague", "bill.gates@aol.com", "1234567890", 3, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(18, "Amanda", "Hartman", "Amanda", "Friend", "amanada.hartman@aol.com", "1234567890", 3, 2000-01-01 00:00:00, 2000-01-01 00:00:00);
 
 INSERT INTO `groups` (
     id, groupname, users, contacts, plans, createdAt, updatedAt
 )
 VALUES
-(1, "Primary", 1, 1, 1, 2000-01-01 00:00:00),
-(2, "Secondary", 1, 1, 1, 2000-01-01 00:00:00),
-(3, "Tertiary", 2, 1, 1, 2000-01-01 00:00:00),
-(4, "Quarternary", 2, 1, 1, 2000-01-01 00:00:00),
-(5, "Quinary", 3, 1, 1, 2000-01-01 00:00:00),
-(6, "Senary", 3, 1, 1, 2000-01-01 00:00:00);
+(1, "Primary", 1, 1, 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(2, "Secondary", 1, 1, 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(3, "Tertiary", 2, 1, 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(4, "Quarternary", 2, 1, 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(5, "Quinary", 3, 1, 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00),
+(6, "Senary", 3, 1, 1, 2000-01-01 00:00:00, 2000-01-01 00:00:00);
 
 INSERT INTO `plans` (
     id, planname, isActive, isHome, durationBeforeExecution, activatestart, activateend, executeplan, users, contacts, groups, createdAt, updatedAt

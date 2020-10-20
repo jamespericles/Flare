@@ -11,6 +11,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const LOADING = 'LOADING';
 
+
 // ACTIONS ON THE DATA STORE //
 //-------------------------------------//
 //? STORE will add objects to the data store.
@@ -29,6 +30,8 @@ export const UPDATE_CONTACT = 'UPDATE_CONTACT';
 //? DELETE_CONTACT will remove contact from the data store
 export const DELETE_CONTACT = 'DELETE_CONTACT';
 
+export const SET_CONTACTS = 'SET_CONTACTS';
+
 // ACTIONS FOR GROUPS //
 // -----------------------------------//
 //? SAVE_GROUP will add GROUP to the data store
@@ -37,6 +40,8 @@ export const SAVE_GROUP = 'SAVE_GROUP';
 export const UPDATE_GROUP = 'UPDATE_GROUP';
 //? DELETE_GROUP will remove GROUP from the data store
 export const DELETE_GROUP = 'DELETE_GROUP';
+
+export const SET_GROUPS = 'SET_GROUPS';
 
 // ACTIONS FOR TEMPLATES //
 // -----------------------------------//
@@ -47,6 +52,9 @@ export const UPDATE_TEMPLATE = 'UPDATE_TEMPLATE';
 //? DELETE_TEMPLATE will remove TEMPLATE from the data store
 export const DELETE_TEMPLATE = 'DELETE_TEMPLATE';
 
+
+export const SET_TEMPLATES = 'SET_TEMPLATES';
+
 // ACTIONS FOR PLANS //
 // -----------------------------------//
 //? SAVE_PLAN will add PLAN to the data store
@@ -55,3 +63,5 @@ export const SAVE_PLAN = 'SAVE_PLAN';
 export const UPDATE_PLAN = 'UPDATE_PLAN';
 //? DELETE_PLAN will remove PLAN from the data store
 export const DELETE_PLAN = 'DELETE_PLAN';
+
+export const SET_PLANS = 'SET_PLANS';

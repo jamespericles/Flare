@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import Navbar from '../components/navbar';
-import { LOADING, SET_USER } from '../store/actions';
+import { SET_USER } from '../store/actions';
 import { useHistory } from 'react-router-dom';
 import { useStoreContext } from '../store/store';
 import Footer from '../components/Footer';

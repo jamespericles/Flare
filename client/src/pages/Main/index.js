@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-// import { Provider } from "react-redux";
-// import Store from "../../store";
-// import axios from 'axios';
-// import { Link, Route, useHistory } from "react-router-dom";
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import { Route } from "react-router-dom";
-
-//? Key body routed components
+import { useStoreContext } from '../../store/store';
 import Dashboard from "../../components/DashboardContainer";
 import Groups from "../../components/GroupContainer";
 import Plans from "../../components/PlanContainer";
@@ -13,7 +9,7 @@ import Templates from "../../components/TemplateContainer";
 import Profile from "../../components/ProfileContainer";
 import Footer from "../../components/Footer";
 import Navbar from 'react-bootstrap/Navbar'
-
+import { SET_GROUPS, SET_PLANS, SET_CONTACTS, SET_TEMPLATES } from '../../store/actions';
 import Sidebar from "../../components/Sidebar";
 
 import './style.css';
@@ -23,9 +19,68 @@ import { enableRipple } from '@syncfusion/ej2-base';
 
 enableRipple(true);
 
-export default class Main extends Component {
-    
-    render() {
+
+const Main = () => {
+    const [state, dispatch] = useStoreContext();
+
+    useEffect(() => {
+        // Load Groups/set to StoreContext
+        axios
+        .get(`/api/groups/getallbyuser/${state.user.id}`)
+        .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data.groups);
+            dispatch({type: SET_GROUPS, groups: response.data.groups});
+        }
+        })
+        .catch((error) => {
+        console.log({message: error.message});
+        console.log(error);
+        });
+
+        // Load Templates / set to StoreContext
+        axios
+        .get(`/api/templates/getallbyuser/${state.user.id}`)
+        .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data.templates);
+            dispatch({type: SET_TEMPLATES, templates: response.data.templates});
+        }
+        })
+        .catch((error) => {
+        console.log({message: error.message});
+        console.log(error);
+        });
+
+        // Load Plans / set to StoreContext
+        axios
+        .get(`/api/plans/getallbyuser/${state.user.id}`)
+        .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data.plans);
+            dispatch({type: SET_PLANS, plans: response.data.plans});
+        }
+        })
+        .catch((error) => {
+        console.log({message: error.message});
+        console.log(error);
+        });
+
+        // Load Contacts / set to StoreContext
+        axios
+        .get(`/api/contacts/getall/${state.user.id}`)
+        .then((response) => {
+        if (response.status === 200) {
+            console.log(response.data.contacts);
+            dispatch({type: SET_CONTACTS, contacts: response.data.contacts});
+        }
+        })
+        .catch((error) => {
+        console.log({message: error.message});
+        console.log(error);
+        });  
+    },[])
+
         return (
             <div className="control-section sidebar-list">
                 <div id="wrapper">
@@ -34,11 +89,11 @@ export default class Main extends Component {
                         <Sidebar style={{ zIndex: "100" }}/>
                         
                         <div>
-                            <Route exact path={`/main`} component={Dashboard} />
-                            <Route exact path={`/main/plans`} component={Plans} />
-                            <Route exact path={`/main/groups`} component={Groups} />
-                            <Route exact path={`/main/templates`} component={Templates} />
-                            <Route exact path={`/main/profile`} component={Profile} />
+                            <Route exact path="/" component={Dashboard} />
+                            <Route exact path="/plans" component={Plans} />
+                            <Route exact path="/groups" component={Groups} />
+                            <Route exact path="/templates" component={Templates} />
+                            <Route exact path="/profile" component={Profile} />
                             
                         </div>
                         <Navbar className="mb-0 text-center" fixed="bottom pb-0 pl-0"><Footer/></Navbar>
@@ -48,6 +103,5 @@ export default class Main extends Component {
             </div>);
     }
     
-}
 
-// export default Main;
+export default Main;

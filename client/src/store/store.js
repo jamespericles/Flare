@@ -16,7 +16,11 @@ import {
   DELETE_CONTACT,
   DELETE_GROUP,
   DELETE_PLAN,
-  DELETE_TEMPLATE
+  DELETE_TEMPLATE,
+  SET_GROUPS,
+  SET_PLANS,
+  SET_CONTACTS,
+  SET_TEMPLATES
 } from './actions';
 
 
@@ -40,6 +44,7 @@ const reducer = (state, action) => {
       };
       // ----- Added New/... END //*
 
+    
     case SET_USER:
       return {
         ...state,
@@ -125,7 +130,30 @@ const reducer = (state, action) => {
         ...state,
         template: action.template,
       };
+    
+    case SET_GROUPS:
+      return {
+        ...state,
+        groups: action.groups,
+      }
 
+    case SET_PLANS:
+      return {
+        ...state,
+        plans: action.plans,
+    }
+
+    case SET_TEMPLATES:
+    return {
+      ...state,
+      templates: action.templates,
+    }
+
+    case SET_CONTACTS:
+    return {
+      ...state,
+      contacts: action.contacts,
+    }
 
     default:
       return state;
@@ -136,9 +164,13 @@ const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
     user: null,
     contact: null,
+    contacts: null,
     group: null,
+    groups: null,
     plan: null,
+    plans: null,
     template: null,
+    templates: null,
     loading: false,
   });
 

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import AddContact from './AddContact';
 import AddGroup from  './AddGroup';
+import ListGroups from './ListGroups';
 import GetUserFirstName from './SubComponents/GetUserFirstName';
 
 export default class Groups extends Component {
@@ -27,6 +28,7 @@ export default class Groups extends Component {
                     <div className="col-md-6">
                         <div className="mt-3 ml-3 mr-3">
                             <AddGroup />
+                            <ListGroups />
                         </div>
                     </div>
                 </div>

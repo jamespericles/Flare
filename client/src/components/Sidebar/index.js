@@ -4,15 +4,13 @@ import React, { Component } from 'react';
 import Logout from '../logout';
 import { Link } from "react-router-dom";
 import "./style.css";
-import { IconContext } from "../../../node_modules/react-icons";
-import { MdDashboard } from '../../../node_modules/react-icons/md';
-import { MdGroup } from '../../../node_modules/react-icons/md';
-import { MdContactMail } from '../../../node_modules/react-icons/md';
-import { MdDevicesOther } from '../../../node_modules/react-icons/md';
-import { MdAccountCircle } from '../../../node_modules/react-icons/md';
+import { IconContext } from "react-icons";
+import { MdDashboard } from 'react-icons/md';
+import { MdGroup } from 'react-icons/md';
+import { MdContactMail } from 'react-icons/md';
+import { MdDevicesOther } from 'react-icons/md';
+import { MdAccountCircle } from 'react-icons/md';
 import GetUserFirstName from '../SubComponents/GetUserFirstName';
-
-
 
 export default class Sidebar extends Component {
     constructor(props) {
@@ -52,7 +50,7 @@ export default class Sidebar extends Component {
                                 <Logout />
                             </li>
                             <li>
-                                <Link to="/main" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
+                                <Link to="/" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
                                     <span>
                                     <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
                                         <MdDashboard /> 
@@ -60,7 +58,7 @@ export default class Sidebar extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/main/groups" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
+                                <Link to="/groups" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
                                     <span>
                                     <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
                                         <MdGroup /> 
@@ -68,7 +66,7 @@ export default class Sidebar extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/main/templates" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
+                                <Link to="/templates" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
                                     <span>
                                     <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
                                         <MdContactMail /> 
@@ -76,7 +74,7 @@ export default class Sidebar extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/main/Plans" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
+                                <Link to="/Plans" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
                                     <span>
                                     <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
                                         <MdDevicesOther /> 
@@ -84,7 +82,7 @@ export default class Sidebar extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/main/Profile" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
+                                <Link to="/Profile" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
                                     <span>
                                     <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
                                         <MdAccountCircle /> 

@@ -187,8 +187,7 @@ const AddContact = () => {
                                 className="submit-btn e-btn btn btn-lg btn-block" 
                                 id="submit-btn" 
                                 type="submit" 
-                                style={{width: "100%", height: "70px"}}
-                                style={{ backgroundColor: "#E8C547" }}
+                                style={{width: "100%", height: "70px", backgroundColor: "#E8C547" }}
                                 onClick={handleSubmit}
                             >
                                 <span style={{fontSize: "15px"}}>Add Contact</span>

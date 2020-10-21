@@ -1,21 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
-const TemplatePlans = sequelize.define("TemplatePlans", {
-  PlanId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Plan,
-      key: "id",
-    },
-  },
-  TemplateId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Template,
-      key: "id",
-    },
-  },
-});
+
 module.exports = (sequelize, DataTypes) => {
   class Template extends Model {
     /*
@@ -27,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User, {
         foreignKey: { allowNull: false },
       });
-      this.belongsToMany(models.Plan, { through: TemplatePlans });
+      this.belongsToMany(models.Plan, { through: models.TemplatePlans });
     }
   }
 

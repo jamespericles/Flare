@@ -1,21 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
-const ContactGroups = sequelize.define("ContactGroups", {
-  GroupId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Group,
-      key: "id",
-    },
-  },
-  ContactId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Contact,
-      key: "id",
-    },
-  },
-});
+
 module.exports = (sequelize, DataTypes) => {
   class Contact extends Model {
     /*
@@ -27,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User, {
         onDelete: "cascade",
       });
-      this.belongsToMany(models.Group, { through: ContactGroups });
+      this.belongsToMany(models.Group, { through: models.ContactGroups });
     }
   }
 

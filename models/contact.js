@@ -1,15 +1,18 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Contact extends Model {
-    /**
+    /*
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.User, {
+        onDelete: "cascade",
+      });
+      this.belongsToMany(models.Group, { through: models.ContactGroups });
     }
   }
 
@@ -21,11 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       relationship: DataTypes.STRING,
       email: DataTypes.STRING,
       mobile: DataTypes.STRING,
-      users: DataTypes.INTEGER      
     },
     {
       sequelize,
-      modelName: 'Contact',
+      modelName: "Contact",
     }
   );
 

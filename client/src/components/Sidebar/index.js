@@ -89,6 +89,14 @@ export default class Sidebar extends Component {
                                     </IconContext.Provider> Profile</span>
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/twilio" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
+                                    <span>
+                                    <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
+                                        <MdAccountCircle /> 
+                                    </IconContext.Provider> Twilio</span>
+                                </Link>
+                            </li>
                             </ul>
                         </div>
 

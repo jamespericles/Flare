@@ -58,8 +58,8 @@ const SignUp = () => {
       });
 
     setSignUpCreds({
-      first_name: '',
-      last_name: '',
+      firstname: '',
+      lastname: '',
       email: '', 
       password: '',
       address1: '',

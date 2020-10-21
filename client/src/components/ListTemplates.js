@@ -5,19 +5,20 @@ import { useStoreContext } from '../store/store';
 
 const ListTemplates = () => {
     const [state, /*dispatch*/] = useStoreContext();
-    
+    console.log("Templates", state.templates)
     return (    
         <div>
             <div className="templateitem">
                 <ul>
-                    {state.templates !== null ? (state.templates.map((template, i) => {
-                            return(
+                    {state.templates !== null && state.templates.length > 0 ? 
+                    (state.templates.map((template, i) => {
+                            return (
                                 <li key={`template-${template.id}`}>
                                   {template.templatename}&nbsp;<button 
                                     // onClick={() => deleteGroup(group.users,group.id)}
                                     >Delete</button>
                                 </li>   
-                            );})) : (<p>Create a template and send a message when you need to the most.</p>)
+                            );})) : ( <p>Create a template and send a message when you need to the most.</p> )
                         }
                 </ul>
             </div>

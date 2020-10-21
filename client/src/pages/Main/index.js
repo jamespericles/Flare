@@ -79,7 +79,7 @@ const Main = () => {
         console.log({message: error.message});
         console.log(error);
         });  
-    },[])
+    },[dispatch, state.user.id])
 
         return (
             <div className="control-section sidebar-list">

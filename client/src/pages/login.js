@@ -7,7 +7,7 @@ import { useStoreContext } from '../store/store';
 import Footer from '../components/Footer';
 
 const Login = () => {
-  const [state, dispatch] = useStoreContext();
+  const [/*state*/, dispatch] = useStoreContext();
   const history = useHistory();
 
   const [loginCreds, setLoginCreds] = useState({

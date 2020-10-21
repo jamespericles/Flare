@@ -8,6 +8,7 @@ import Plans from "../../components/PlanContainer";
 import Templates from "../../components/TemplateContainer";
 import Profile from "../../components/ProfileContainer";
 import Footer from "../../components/Footer";
+import Twilio from "../../components/Twilio";
 import Navbar from 'react-bootstrap/Navbar'
 import { SET_GROUPS, SET_PLANS, SET_CONTACTS, SET_TEMPLATES } from '../../store/actions';
 import Sidebar from "../../components/Sidebar";
@@ -94,6 +95,7 @@ const Main = () => {
                             <Route exact path="/groups" component={Groups} />
                             <Route exact path="/templates" component={Templates} />
                             <Route exact path="/profile" component={Profile} />
+                            <Route exact path="/twilio" component={Twilio} />
                             
                         </div>
                         <Navbar className="mb-0 text-center" fixed="bottom pb-0 pl-0"><Footer/></Navbar>

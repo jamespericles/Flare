@@ -10,7 +10,7 @@ const ListContacts = () => {
         <div>
             <div className="contactitem">
                 <ul>
-                    {state.contacts !== null ? (state.contacts.map((contact, i) => {
+                    {state.contacts !== null && state.contacts.length > 0  ? (state.contacts.map((contact, i) => {
                             return(
                                 <li key={`contact-${contact.id}`}>
                                   {contact.contactname}&nbsp;<button 

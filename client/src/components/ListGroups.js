@@ -8,7 +8,7 @@ const ListGroups = () => {
         <div>
             <div className="groupitem">
                 <ul>
-                {state.groups ? (state.groups.map((group) => {
+                {state.groups !== null && state.groups.length > 0  ? (state.groups.map((group) => {
                             return(
                                 <li key={`group-${group.id}`}>
                                   {group.groupname}&nbsp;<button 

@@ -10,7 +10,7 @@ const ListPlans = () => {
         <div>
             <div className="planitem">
                 <ul>
-                    {state.plans !== null ? (state.plans.map((plan, i) => {
+                    {state.plans !== null && state.plans.length > 0  ? (state.plans.map((plan, i) => {
                             return(
                                 <li key={`plan-${plan.id}`}>
                                   {plan.planname}&nbsp;<button 

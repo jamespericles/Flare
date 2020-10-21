@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       relationship: DataTypes.STRING,
       email: DataTypes.STRING,
       mobile: DataTypes.STRING,
-      users: DataTypes.INTEGER,
     },
     {
       sequelize,

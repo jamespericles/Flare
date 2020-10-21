@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
   Group.init(
     {
       groupname: DataTypes.STRING,
-      users: DataTypes.INTEGER,
       contacts: DataTypes.INTEGER,
       plans: DataTypes.INTEGER,
     },

@@ -1,20 +1,19 @@
-const express = require('express');
-const crypto = require('crypto');
-const User = require('../../models').User;
-const passport = require('../../passport');
-const { isValidEmail, isValidPassword } = require('../../utilities/authUtils');
+const express = require("express");
+const crypto = require("crypto");
+const User = require("../../models").User;
+const passport = require("../../passport");
+const { isValidEmail, isValidPassword } = require("../../utilities/authUtils");
 const router = express.Router();
 
 //? Added Contacts here:
-const Contact = require('../../models').Contact;
+const Contact = require("../../models").Contact;
 //?---------------------
-
 
 // USER ROUTES
 
 //* GET CURRENT USER *************************
 //! NOTE: Do not change this route.  User GET is functioning correctly
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   if (req.user) {
     const user = await User.findOne({
       where: {
@@ -27,7 +26,7 @@ router.get('/', async (req, res) => {
       return;
     }
 
-    res.status(404).json({ status: 'error', message: err.message });
+    res.status(404).json({ status: "error", message: err.message });
   } else {
     res.json({ user: null });
   }
@@ -36,7 +35,7 @@ router.get('/', async (req, res) => {
 
 //* USER SIGNUP (USER CREATE) ****************
 //! NOTE: Do not change this route.  User CREATE is functioning correctly
-router.post('/signup', async function (req, res, next) {
+router.post("/signup", async function (req, res, next) {
   let user = {};
   user = await User.findOne({
     where: {
@@ -45,24 +44,26 @@ router.post('/signup', async function (req, res, next) {
   });
 
   if (user) {
-    res
-      .status(400)
-      .json({ message: `Sorry, a user is already using that email: ${req.body.email}` });
+    res.status(400).json({
+      message: `Sorry, a user is already using that email: ${req.body.email}`,
+    });
     return;
   }
-  const salt = crypto.randomBytes(64).toString('hex');
+  const salt = crypto.randomBytes(64).toString("hex");
   const password = crypto
-    .pbkdf2Sync(req.body.password, salt, 10000, 64, 'sha512')
-    .toString('base64');
+    .pbkdf2Sync(req.body.password, salt, 10000, 64, "sha512")
+    .toString("base64");
   if (!isValidPassword(req.body.password)) {
-    return res
-      .status(400)
-      .json({ status: 'error', message: 'Password must be 8 or more characters.' });
+    return res.status(400).json({
+      status: "error",
+      message: "Password must be 8 or more characters.",
+    });
   }
   if (!isValidEmail(req.body.email)) {
-    return res
-      .status(400)
-      .json({ status: 'error', message: 'Email address not formed correctly.' });
+    return res.status(400).json({
+      status: "error",
+      message: "Email address not formed correctly.",
+    });
   }
   try {
     user = await User.create({
@@ -79,22 +80,22 @@ router.post('/signup', async function (req, res, next) {
       salt: salt,
     });
   } catch (err) {
-    return res.json({ status: 'error', message: err.message });
+    return res.json({ status: "error", message: err.message });
   }
   if (user) {
-    passport.authenticate('local', function (err, user, info) {
+    passport.authenticate("local", function (err, user, info) {
       if (err) {
         return next(err);
       }
       if (!user) {
-        return res.json({ status: 'error', message: info.message });
+        return res.json({ status: "error", message: info.message });
       }
 
       req.logIn(user, function (err) {
         if (err) {
           return next(err);
         }
-        return res.json({ status: 'ok' });
+        return res.json({ status: "ok" });
       });
     })(req, res, next);
   }
@@ -103,19 +104,19 @@ router.post('/signup', async function (req, res, next) {
 
 //* USER LOGIN *******************************
 //! NOTE: Do not change this route.  User LOGIN is functioning correctly
-router.post('/login', function (req, res, next) {
-  passport.authenticate('local', function (err, user, info) {
+router.post("/login", function (req, res, next) {
+  passport.authenticate("local", function (err, user, info) {
     if (err) {
       return next(err);
     }
     if (!user) {
-      return res.status(400).json({ status: 'error', message: info.message });
+      return res.status(400).json({ status: "error", message: info.message });
     }
     req.logIn(user, function (err) {
       if (err) {
         return next(err);
       }
-      return res.json({ status: 'ok' });
+      return res.json({ status: "ok" });
     });
   })(req, res, next);
 });
@@ -123,12 +124,83 @@ router.post('/login', function (req, res, next) {
 
 //* USER LOGOUT *******************************
 //! NOTE: Do not change this route.  User LOGOUT is functioning correctly
-router.get('/logout', function (req, res) {
+router.get("/logout", function (req, res) {
   req.logout();
-  res.redirect('/');
+  res.redirect("/");
 });
 //* ******************************************
 
+// CONTACT ROUTES
+
+// router.get('/getcontacts/:uid', async (req, res) => {
+//   // let user = empty object
+//   let user = {};
+//   // find the current user...
+//   user = await User.findOne({
+//     // based on the user id in the params of the api
+//     where: {
+//       id: req.params.uid,
+//     }
+//   })
+//   // if the user id in the params exists...
+//   if (user) {
+//       // get all the contacts in the db associated with the user...
+//       const contacts = await Contact.findAll({
+//           // where the foreign key of "user" in the contacts table matches the uid in the api request
+//           where: {
+//               user: req.params.uid,
+//           },
+//       });
+//       // and then after searching the table, if there are contacts...
+//       if(contacts) {
+//           // return them as a JSON object
+//           res.json({ contacts });
+//           return;
+//       // or if none are returned, return a 404 error
+//       } else {
+//       res.status(404).json({ status: 'error', message: err.message });
+//       }
+//   // if the user id in the params does not exist...
+//   } else {
+//       // send back an empty object for contacts
+//       console.log ('No user matches the requested uid in the api');
+//       res.json({ contacts: null });
+//   }
+// });
+
+router.post("/addcontact/:uid", async function (req, res, next) {
+  let contact = {};
+
+  contact = await Contact.findOne({
+    where: {
+      UserId: req.params.uid,
+      nickname: req.body.nickname,
+      email: req.body.email,
+    },
+  });
+
+  if (contact) {
+    res.status(400).json({
+      status: "error",
+      message: `You already have a contact with the nickname: ${req.body.nickname}`,
+    });
+    return;
+  } else {
+    try {
+      contact = await Contact.create({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        nickname: req.body.nickname,
+        relationship: req.body.relationship,
+        email: req.body.email,
+        mobile: req.body.mobile,
+        UserId: req.params.uid,
+      });
+    } catch (err) {
+      return res.json({ status: "error", message: err.message });
+    }
+  }
+});
 
 //* MODULE EXPORTS ********************************
 //! Do not change module exports command. Required and functioning as expected.

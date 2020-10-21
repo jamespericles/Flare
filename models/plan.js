@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       activatestart: DataTypes.DATE,
       activateend: DataTypes.DATE,
       executeplan: DataTypes.BOOLEAN,
-      users: DataTypes.INTEGER,
       contacts: DataTypes.INTEGER,
       groups: DataTypes.INTEGER,
     },

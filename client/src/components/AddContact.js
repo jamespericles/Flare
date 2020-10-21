@@ -1,29 +1,43 @@
 // Component to hold a contact addition/creation form; functionality for adding a contact
 // may weave in search and update functionality here if possible
 
-import axios from 'axios';
-import React, { useState } from 'react';
+import axios from "axios";
+import React, { useState } from "react";
 // import { select } from '@syncfusion/ej2-base';
 // import { FormValidator, FormValidatorModel } from '@syncfusion/ej2-inputs';
 // import { DialogComponent } from '@syncfusion/ej2-react-popups';
 // import * as ReactDOM from 'react-dom';
-import { LOADING } from '../store/actions';
-import { saveContact } from '../store/actionCreators';
-import { useStoreContext } from '../store/store';
+import { LOADING } from "../store/actions";
+import { saveContact } from "../store/actionCreators";
+import { useStoreContext } from "../store/store";
 
 const AddContact = () => {
-    const [state, dispatch] = useStoreContext();
+  const [state, dispatch] = useStoreContext();
 
-    const [newContact, setNewContact] = useState({
-        firstname: '',
-        lastname: '',
-        nickname: '',
-        relationship: '',
-        email: '',
-        mobile: '',
-    });
+  const [newContact, setNewContact] = useState({
+    firstname: "",
+    lastname: "",
+    nickname: "",
+    relationship: "",
+    email: "",
+    mobile: "",
+  });
 
-    console.log(state.user.id);
+  console.log(state.user.id);
+
+  // Handles updating the new contact whenever a change event or keytroke occurs.
+  const handleChange = (event) => {
+    // Sets a generic name and value so that newContact updates whenever any field is updated, and updates the field being with the current value of that field.
+    const { name, value } = event.target;
+    // Spreads newContact so we don't overwrite the existing info of the field(s) and then sets the value of the field regardless of the value and name of the field (since set generically).
+    console.log(`firstname in form: ${newContact.firstname}`);
+    console.log(`lastname in form: ${newContact.lastname}`);
+    console.log(`nickname in form: ${newContact.nickname}`);
+    console.log(`relationship in form: ${newContact.relationship}`);
+    console.log(`email in form: ${newContact.email}`);
+    console.log(`mobile in form: ${newContact.mobile}`);
+    setNewContact({ ...newContact, [name]: value });
+  };
 
     // Handles updating the new contact whenever a change event or keytroke occurs.
     const handleChange = (event) => {
@@ -60,7 +74,7 @@ const AddContact = () => {
                 relationship: newContact.relationship,
                 email: newContact.email,
                 mobile: newContact.mobile,
-                users: state.user.id
+                UserId: state.user.id
             })
             .then((response) => {
                 // console.log (`posted firstname: ${newContact.firstname}`);
@@ -197,8 +211,28 @@ const AddContact = () => {
                         <div id="confirmationDialog"/> </div>
                     </div>
                 </div>
+                <div id="mobileError" />
+              </div>
+              <br />
+              <br />
+              <div className="submitBtn">
+                <button
+                  className="submit-btn e-btn btn btn-lg btn-block"
+                  id="submit-btn"
+                  type="submit"
+                  style={{ backgroundColor: "#E8C547" }}
+                  onClick={handleSubmit}
+                >
+                  Add Contact
+                </button>
+              </div>
+            </form>
+            <div id="confirmationDialog" />{" "}
+          </div>
         </div>
-    ) 
-}
+      </div>
+    </div>
+  );
+};
 
 export default AddContact;

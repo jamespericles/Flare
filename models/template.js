@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       nickname: DataTypes.STRING,
       val: DataTypes.STRING,
-      users: DataTypes.INTEGER,
       contacts: DataTypes.INTEGER,
       groups: DataTypes.INTEGER,
       plans: DataTypes.INTEGER,

@@ -23,6 +23,7 @@
     "@react-navigation/drawer": "^5.9.3",
     "@react-navigation/native": "^5.7.6",
     "@syncfusion/ej2-react-base": "^18.3.37",
+    "@syncfusion/ej2-react-calendars": "^18.3.42",
     "@syncfusion/ej2-react-navigations": "^18.3.40",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",

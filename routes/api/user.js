@@ -130,75 +130,61 @@ router.get("/logout", function (req, res) {
 });
 //* ******************************************
 
-// CONTACT ROUTES
-
-// router.get('/getcontacts/:uid', async (req, res) => {
-//   // let user = empty object
-//   let user = {};
-//   // find the current user...
-//   user = await User.findOne({
-//     // based on the user id in the params of the api
-//     where: {
-//       id: req.params.uid,
-//     }
-//   })
-//   // if the user id in the params exists...
-//   if (user) {
-//       // get all the contacts in the db associated with the user...
-//       const contacts = await Contact.findAll({
-//           // where the foreign key of "user" in the contacts table matches the uid in the api request
-//           where: {
-//               user: req.params.uid,
-//           },
-//       });
-//       // and then after searching the table, if there are contacts...
-//       if(contacts) {
-//           // return them as a JSON object
-//           res.json({ contacts });
-//           return;
-//       // or if none are returned, return a 404 error
-//       } else {
-//       res.status(404).json({ status: 'error', message: err.message });
-//       }
-//   // if the user id in the params does not exist...
-//   } else {
-//       // send back an empty object for contacts
-//       console.log ('No user matches the requested uid in the api');
-//       res.json({ contacts: null });
-//   }
-// });
-
-router.post("/addcontact/:uid", async function (req, res, next) {
-  let contact = {};
-
-  contact = await Contact.findOne({
+//* USER UPDATE *******************************
+// // ! NOTE: Do not change this route.  User UPDATE is functioning correctly
+// e.g. API address: localhost:3000/api/user/update/1/3
+router.put("/update/:userid", async function (req, res) {
+  let user = {};
+  user = await User.findOne({
     where: {
-      UserId: req.params.uid,
-      nickname: req.body.nickname,
-      email: req.body.email,
+      id: req.params.userid,
     },
   });
-
-  if (contact) {
-    res.status(400).json({
+  const salt = crypto.randomBytes(64).toString("hex");
+  const password = crypto
+    .pbkdf2Sync(req.body.password, salt, 10000, 64, "sha512")
+    .toString("base64");
+  if (!isValidPassword(req.body.password)) {
+    return res.status(400).json({
       status: "error",
-      message: `You already have a contact with the nickname: ${req.body.nickname}`,
+      message: "Password must be 8 or more characters.",
     });
-    return;
-  } else {
+  }
+  if (!isValidEmail(req.body.email)) {
+    return res.status(400).json({
+      status: "error",
+      message: "Email address not formed correctly.",
+    });
+  }
+  if (user) {
     try {
-      contact = await Contact.create({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        nickname: req.body.nickname,
-        relationship: req.body.relationship,
-        email: req.body.email,
-        mobile: req.body.mobile,
-        UserId: req.params.uid,
-      });
+      user = await User.update(
+        {
+          id: req.params.userid,
+          first_name: req.body.firstname,
+          last_name: req.body.lastname,
+          email: req.body.email,
+          address1: req.body.address1,
+          address2: req.body.address2,
+          city: req.body.city,
+          state: req.body.state,
+          zip: req.body.zip,
+          mobile: req.body.mobile,
+          password: password,
+          salt: salt,
+        },
+        {
+          where: {
+            id: req.params.userid
+          },
+        }
+      );
+      return res.send(user);
     } catch (err) {
-      return res.json({ status: "error", message: err.message });
+      return res.status(400).json({ status: "error", message: err.message });
     }
+  } else {
+    return res.status(400).json({ status: "error", message: err.message });
   }
 });
 

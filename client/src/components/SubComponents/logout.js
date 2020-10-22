@@ -3,11 +3,11 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import { LOGOUT, UNSET_USER } from '../store/actions';
-import { useStoreContext } from '../store/store';
-import { IconContext } from "../../../node_modules/react-icons";
-import { MdExitToApp } from '../../node_modules/react-icons/md';
-import "./Sidebar/style.css";
+import { LOGOUT, UNSET_USER } from '../../store/actions';
+import { useStoreContext } from '../../store/store';
+import { IconContext } from "react-icons";
+import { MdExitToApp } from 'react-icons/md';
+import "../Sidebar/style.css";
 
   const Logout = () => {
     const [, dispatch] = useStoreContext();

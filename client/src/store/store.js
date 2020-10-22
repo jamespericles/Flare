@@ -9,6 +9,7 @@ import {
   SAVE_GROUP,
   SAVE_PLAN,
   SAVE_TEMPLATE,
+  UPDATE_USER,
   UPDATE_CONTACT,
   UPDATE_GROUP,
   UPDATE_PLAN,
@@ -36,16 +37,20 @@ const reducer = (state, action) => {
         loading: true,
       };
     
-      // Added New/ Not in original modal
     case LOADING:
       return {
         ...state,
         loading: true,
       };
-      // ----- Added New/... END //*
-
     
     case SET_USER:
+      return {
+        ...state,
+        user: action.user,
+        loading: false,
+      };
+
+    case UPDATE_USER:
       return {
         ...state,
         user: action.user,
@@ -66,10 +71,10 @@ const reducer = (state, action) => {
       };
     
     case UPDATE_CONTACT:
-    return {
-      ...state,
-      contact: action.contact
-    };
+      return {
+        ...state,
+        contact: action.contact
+      };
 
     case DELETE_CONTACT:
       return {
@@ -78,16 +83,16 @@ const reducer = (state, action) => {
       };
 
     case SAVE_GROUP:
-    return {
-      ...state,
-      group: action.group
-    };
+      return {
+        ...state,
+        group: action.group
+      };
     
     case UPDATE_GROUP:
-    return {
-      ...state,
-      group: action.group
-    };
+      return {
+        ...state,
+        group: action.group
+      };
 
     case DELETE_GROUP:
       return {
@@ -102,10 +107,10 @@ const reducer = (state, action) => {
       };
     
     case UPDATE_PLAN:
-    return {
-      ...state,
-      plan: action.plan
-    };
+      return {
+        ...state,
+        plan: action.plan
+      };
 
     case DELETE_PLAN:
       return {
@@ -120,10 +125,10 @@ const reducer = (state, action) => {
       };
     
     case UPDATE_TEMPLATE:
-    return {
-      ...state,
-      template: action.template
-    };
+      return {
+        ...state,
+        template: action.template
+      };
 
     case DELETE_TEMPLATE:
       return {
@@ -141,19 +146,19 @@ const reducer = (state, action) => {
       return {
         ...state,
         plans: action.plans,
-    }
+      }
 
     case SET_TEMPLATES:
-    return {
-      ...state,
-      templates: action.templates,
-    }
+      return {
+        ...state,
+        templates: action.templates,
+      }
 
     case SET_CONTACTS:
-    return {
-      ...state,
-      contacts: action.contacts,
-    }
+      return {
+        ...state,
+        contacts: action.contacts,
+      }
 
     default:
       return state;

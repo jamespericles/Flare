@@ -3,13 +3,8 @@
 
 import axios from 'axios';
 import React, { useState } from 'react';
-// import { select } from '@syncfusion/ej2-base';
-// import { FormValidator, FormValidatorModel } from '@syncfusion/ej2-inputs';
-// import { DialogComponent } from '@syncfusion/ej2-react-popups';
-// import * as ReactDOM from 'react-dom';
-import { LOADING } from '../store/actions';
-import { saveGroup } from '../store/actionCreators';
-import { useStoreContext } from '../store/store';
+import { SAVE_GROUP } from '../../store/actions';
+import { useStoreContext } from '../../store/store';
 
 const AddGroup = () => {
     const [state, dispatch] = useStoreContext();
@@ -31,8 +26,6 @@ const AddGroup = () => {
     const handleSubmit = (event) => {
         // Prevents page refresh thereby losing info
         event.preventDefault();
-        dispatch({ type: LOADING });
-
         axios
             .post(`/api/groups/add/${state.user.id}`, {
                 groupname: newGroup.groupname,
@@ -40,7 +33,7 @@ const AddGroup = () => {
             })
             .then((response) => {
                 if (response.status === 200) {
-                    dispatch(saveGroup(newGroup))
+                    dispatch({ type: SAVE_GROUP, group: newGroup})
                 };
             })
             .catch((error) => {
@@ -58,19 +51,20 @@ const AddGroup = () => {
     
     return (    
         <div className = 'control-pane'>
-            <div className='control-section col-xs-12 col-sm-12 col-md-4'>
-                <h4 className="form-title">Add New Group</h4>
+            <div className='control-section'>
+                
                 <div className='validation_wrapper'>
                     <div className="control_wrapper" id="control_wrapper">
                         <form id="addGroup"  method="post">
                             <div className="form-group" >
                                 <div className="e-float-input">
-                                    <label className="e-float-text e-label-top" htmlFor="fistname">Group Name</label>
                                     <input 
                                         type="text" 
                                         id="groupname" 
                                         name="groupname"
+                                        placeholder="Group Name or Nickname"
                                         value={newGroup.groupname} 
+                                        style={{ width: "100%"}}
                                         onChange={handleChange} 
                                     />
                                     <span className="e-float-line"/>  

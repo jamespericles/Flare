@@ -6,6 +6,7 @@
   "dependencies": {
     "@syncfusion/ej2-react-base": "^18.3.37",
     "@syncfusion/ej2-react-buttons": "^18.3.40",
+    "@syncfusion/ej2-react-calendars": "^18.3.42",
     "@syncfusion/ej2-react-dropdowns": "^18.3.40",
     "@syncfusion/ej2-react-grids": "^18.3.40",
     "@syncfusion/ej2-react-inplace-editor": "^18.3.40",
@@ -31,7 +32,7 @@
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "^3.4.4"
   },
   "scripts": {
     "start": "react-scripts start",

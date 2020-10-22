@@ -44,7 +44,7 @@ if (process.env.JAWSDB_URL) {
     port: process.env.JAWSDB_PORT,
     user: process.env.JAWSDB_USER,
     password: process.env.JAWSDB_PASSWORD,
-    database: process.env.JAWSDB_DATABASE,
+    database: process.env.JAWSDB_DATABASE, 
 })
 } else {
   let connection = mysql.createConnection({

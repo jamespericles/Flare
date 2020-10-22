@@ -2,6 +2,9 @@
 require("dotenv").config();
 // Requiring necessary npm packages
 const express = require("express");
+const bodyParser = require('body-parser'); //TWILIO
+const pino = require('express-pino-logger')(); //TWILIO
+const cron = require('node-cron'); //TWILIO
 
 // //const favicon = require('serve-favicon');
 // //const path = require('path');
@@ -24,6 +27,9 @@ const PORT = process.env.PORT || 3001;
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false })); //TWILIO
+app.use(bodyParser.json()); //TWILIO
+app.use(pino); //TWILIO
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
@@ -72,4 +78,63 @@ db.sequelize.sync(
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });
+});
+
+// TWILIO
+// set credentials in the environment 
+const client = require('twilio')(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+
+app.post('/api/messages', (req, res) => {
+  res.header('Content-Type', 'application/json');
+  /* NEEDED WITHIN THE CRON JOB - then not needed, .catch to log errors */
+  client.messages
+    .create({
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: req.body.to,
+      body: req.body.body
+    })
+    .then(() => {
+      res.send(JSON.stringify({ success: true }));
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(JSON.stringify({ success: false }));
+    });
+  /* NEEDED END */
+});
+
+app.post('/api/plans/:id/start', (req, res) => {
+  /* STEPS
+    1) Make DB request for plan and join with template / group / contact
+    2) Start cron job with plan time as we the time to run
+    3) Within cron run client.messages with each contact and the template message
+  */
+
+  // CRON EXAMPLE - */15 equals at 15 minutes
+    // const task = cron.schedule('0 */15 * * * *', () => {
+        // Loop through contactts and send messages here
+        // task.destroy();
+    // })
+
+    // Task may need to be a global variable so you can destroy it within another endpoint
+  //
+
+  /* NEEDED WITHIN THE CRON JOB - then not needed, .catch to log errors */
+  client.messages
+    .create({
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: req.body.to,
+      body: req.body.body
+    })
+    .then(() => {
+      res.send(JSON.stringify({ success: true }));
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(JSON.stringify({ success: false }));
+    });
+  /* NEEDED END */
 });

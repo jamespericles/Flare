@@ -1,12 +1,13 @@
 // Component to handle top menu bar and sidedrawer navigation
 import { SidebarComponent } from '@syncfusion/ej2-react-navigations';
 import React, { Component } from 'react';
-import Logout from '../logout';
+import Logout from '../SubComponents/logout';
 import { Link } from "react-router-dom";
 import "./style.css";
 import { IconContext } from "react-icons";
 import { MdDashboard } from 'react-icons/md';
 import { MdGroup } from 'react-icons/md';
+import { MdPersonAdd } from 'react-icons/md';
 import { MdContactMail } from 'react-icons/md';
 import { MdDevicesOther } from 'react-icons/md';
 import { MdAccountCircle } from 'react-icons/md';
@@ -33,7 +34,7 @@ export default class Sidebar extends Component {
                 <div id="head">
                     <div className="text">Menu</div>
                     <span id="hamburger" className="e-icons menu" onClick={this.openClick}></span>
-                    <div className="header">Welcome, <GetUserFirstName />! &nbsp; &nbsp; &nbsp; Ready to send up a <em>Flare</em>?</div>
+                    <div className="header">Welcome, <GetUserFirstName />! Ready to send up a <em>Flare</em>?</div>
                 </div> 
                 <SidebarComponent 
                         id="sidebar-menu" 
@@ -63,6 +64,14 @@ export default class Sidebar extends Component {
                                     <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
                                         <MdGroup /> 
                                     </IconContext.Provider> Groups</span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/contacts" className="btn btn-link sidebarLinks" onClick={this.closeClick}>
+                                    <span>
+                                    <IconContext.Provider value={{ size: "1em", style: { verticalAlign: 'text-top', color: "default" }  }}>
+                                        <MdPersonAdd /> 
+                                    </IconContext.Provider> Contacts</span>
                                 </Link>
                             </li>
                             <li>

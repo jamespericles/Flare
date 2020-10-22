@@ -97,12 +97,35 @@ router.get("/getone/:userid/:planname", async (req, res) => {
   // if the user id in the params exists...
   if (plan) {
     // return them as a JSON object
-    res.json({ plan });
-    return;
+    return res.json({ plan });
     // or if none are returned, return a 404 error
   } else {
     console.log("No user matches the requested uid in the api");
     res.status(404).json({ status: "error", message: err.message });
+  }
+});
+
+// GET A PLAN BASED ON USERID AND PLAN NAME
+// e.g. API address: localhost:3000/api/plans/getone/1/2
+router.get("/getonebyuid/:userid/:planid", async (req, res) => {
+  // let contact = empty object
+  let plan = {};
+  // find the contact...
+  plan = await Plan.findOne({
+    // based on the contact nickname in the params of the api
+    where: {
+      id: req.params.planid,
+      UserId: req.params.userid,
+    },
+  });
+  // if the user id in the params exists...
+  if (plan) {
+    // return them as a JSON object
+    return res.json({ plan });
+    // or if none are returned, return a 404 error
+  } else {
+    console.log("No user matches the requested uid in the api");
+    res.status(404).json({ status: "error" });
   }
 });
 
@@ -118,6 +141,12 @@ router.post("/add/:userid", async function (req, res) {
     defaults: {
       planname: req.body.planname,
       UserId: req.params.userid,
+      isActive: req.body.isActive,
+      isHome: req.body.isHome,
+      durationBeforeExecution: req.body.durationBeforeExecution,
+      activatestart: req.body.activatestart,
+      activateend: req.body.activateend,
+      executeplan: req.body.executeplan,
     },
   });
   if (plan) {
@@ -144,6 +173,15 @@ router.put("/update/:userid/:planid", async function (req, res) {
         {
           id: req.params.planid,
           UserId: req.params.userid,
+          planname: req.body.planname,
+          isActive: req.body.isActive,
+          isHome: req.body.isHome,
+          durationBeforeExecution: req.body.durationBeforeExecution,
+          activatestart: req.body.activatestart,
+          activateend: req.body.activateend,
+          executeplan: req.body.executeplan,
+          contacts: req.body.contacts,
+          groups: req.body.groups
         },
         {
           where: {
@@ -152,7 +190,7 @@ router.put("/update/:userid/:planid", async function (req, res) {
           },
         }
       );
-      return res.send(plan);
+      return res.json(plan);
     } catch (err) {
       return res.status(400).json({ status: "error", message: err.message });
     }

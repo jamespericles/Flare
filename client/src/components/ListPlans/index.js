@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useStoreContext } from '../../store/store';
 import { SET_PLANS } from '../../store/actions';
-import { PlanItem } from "../PlanItem";
+import PlanItem from "../PlanItem";
 // import { IconContext } from "react-icons";
 // import { MdRemoveCircle } from 'react-icons/md';
 import { Link } from "react-router-dom";
@@ -20,23 +20,23 @@ import axios from 'axios';
 const ListPlans = () => {
     const [state, dispatch] = useStoreContext();
     const [currPlans, setCurrPlans] = useState([state.plans])
-    const [selectedPlan, setSelectedPlan] = useState({
-        id: '',
-        planname: '',
-        isActive: '',
-        isHome: '',
-        durationBeforeExecution: '',
-        activatestart: 0,
-        activateend: 0,
-        executeplan: 0,
-        UserId: state.user.id,
-        contacts: '',
-        groups: '',
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        durationCalculated: 0 
-    });
+    // const [selectedPlan, setSelectedPlan] = useState({
+    //     id: '',
+    //     planname: '',
+    //     isActive: '',
+    //     isHome: '',
+    //     durationBeforeExecution: '',
+    //     activatestart: 0,
+    //     activateend: 0,
+    //     executeplan: 0,
+    //     UserId: state.user.id,
+    //     contacts: '',
+    //     groups: '',
+    //     days: 0,
+    //     hours: 0,
+    //     minutes: 0,
+    //     durationCalculated: 0 
+    // });
 
     useEffect(() => {
         loadPlans()

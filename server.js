@@ -40,7 +40,8 @@ if (process.env.NODE_ENV === "production") {
 
 if (process.env.JAWSDB_URL) {
   let connection = mysql.createConnection(
-    {process.env.JAWSDB_URL,
+    {
+      URL: process.env.JAWSDB_URL,
     host: process.env.JAWSDB_HOST,
     port: process.env.JAWSDB_PORT,
     user: process.env.JAWSDB_USER,

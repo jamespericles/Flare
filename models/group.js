@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User, {
         foreignKey: { allowNull: false }
       });
-      this.hasMany(models.Contact);
-      this.belongsToMany(models.Plan, { through: models.GroupPlans })
+      this.belongsToMany(models.Contact, { through: models.ContactGroups });
+      this.belongsToMany(models.Plan, { through: models.GroupPlans });
     }
   }
 
   Group.init(
     {
-      groupname: DataTypes.STRING,
+      groupname: DataTypes.STRING
     },
     {
       sequelize,

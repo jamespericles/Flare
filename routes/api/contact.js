@@ -7,6 +7,7 @@ const router = express.Router();
 
 //? Added Contacts here:
 const Contact = require("../../models").Contact;
+const Group = require("../../models").Group;
 //?---------------------
 
 // CONTACT ROUTES
@@ -65,7 +66,7 @@ router.get("/getone/:nickname", async (req, res) => {
 router.post("/add/:uid", async function (req, res) {
   let contact = {};
   console.log(req.params.uid);
-  contact = await Contact.findOrCreate({
+  contact = await Contact.create({
     where: {
       UserId: req.params.uid,
       nickname: req.body.nickname,
@@ -82,6 +83,14 @@ router.post("/add/:uid", async function (req, res) {
     }
   });
   if (contact) {
+    console.log(req.body.groups);
+    console.log(contact);
+    req.body.groups.forEach(async groupid => {
+      const group = await Group.findOne({ where: { id: groupid } });
+      if (group) {
+        contact.addGroup(group);
+      }
+    });
     res.json({ contact });
   } else {
     res.status(400).json({ status: "error", message: err.message });

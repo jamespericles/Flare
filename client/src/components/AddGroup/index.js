@@ -11,9 +11,7 @@ const AddGroup = () => {
 
   const [newGroup, setNewGroup] = useState({
     groupname: "",
-    users: "",
-    contacts: "",
-    plans: ""
+    UserId: ""
   });
 
   console.log(state.user.id);
@@ -31,7 +29,7 @@ const AddGroup = () => {
     axios
       .post(`/api/groups/add/${state.user.id}`, {
         groupname: newGroup.groupname,
-        users: state.user.id
+        UserId: state.user.id
       })
       .then(response => {
         if (response.status === 200) {
@@ -45,9 +43,7 @@ const AddGroup = () => {
 
     setNewGroup({
       groupname: "",
-      users: "",
-      contacts: "",
-      plans: ""
+      UserId: ""
     });
   };
 

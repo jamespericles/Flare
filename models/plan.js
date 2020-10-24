@@ -12,10 +12,18 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User, {
         foreignKey: { allowNull: false }
       });
-      this.hasOne(models.Template);
-      this.hasOne(models.Group);
+      this.belongsToMany(models.Template, { through: models.TemplatePlans });
+      this.belongsToMany(models.Group, { through: models.GroupPlans });
     }
   }
+
+  // When this becomes "having many templates" and "haveing many groups":
+  // hasOne should become belongsToMany because the templates and groups
+  // belongsToMany Plans
+
+  // hasMany w/ belongsTo
+  // hasOne w/ belongsToMany or belongsTo
+  // belongsToMany w/ belongsToMany
 
   Plan.init(
     {

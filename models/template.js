@@ -20,8 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       nickname: DataTypes.STRING,
       val: DataTypes.STRING,
-      contacts: DataTypes.INTEGER,
-      groups: DataTypes.INTEGER,
       plans: DataTypes.INTEGER
     },
     {

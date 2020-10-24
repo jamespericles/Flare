@@ -72,7 +72,7 @@ const AddContact = () => {
         email: newContact.email,
         mobile: newContact.mobile,
         UserId: state.user.id,
-        GroupId: newContact.GroupId
+        groups: newContact.groups
       })
       .then(response => {
         if (response.status === 200) {

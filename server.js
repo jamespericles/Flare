@@ -37,23 +37,18 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 // Creating mySQL db connection for user session
-// if (process.env.JAWSDB_URL) {
-//   let connection = mysql.createConnection({
-//     use_env_variable: process.env.JAWSDB_URL,
-//     host: process.env.JAWSDB_HOST,
-//     port: process.env.JAWSDB_PORT,
-//     user: process.env.JAWSDB_USER,
-//     password: process.env.JAWSDB_PASSWORD,
-//     database: process.env.JAWSDB_DATABASE,
-// })
-// } else {
-let connection = mysql.createConnection({
+let connection;
+if (process.env.JAWSDB_URL) {
+  connection = mysql.createConnection(process.env.JAWSDB_URL)
+} else {
+  let connection = mysql.createConnection({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_DB
+  database: process.env.DB_DB,
 });
+
 
 // Setting up session variable expiration
 const sessionStore = new MySQLStore(

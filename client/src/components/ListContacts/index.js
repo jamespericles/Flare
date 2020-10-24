@@ -10,6 +10,10 @@ const ListContacts = () => {
   const [state, dispatch] = useStoreContext();
 
   useEffect(() => {
+    loadContacts();
+  }, [dispatch, state.contacts, state.user.id]);
+
+  function loadContacts() {
     axios
       .get(`/api/contacts/getall/${state.user.id}`)
       .then(response => {
@@ -22,37 +26,7 @@ const ListContacts = () => {
         console.log({ message: error.message });
         console.log(error);
       });
-  }, [dispatch, state.user.id]);
-
-  // function loadContacts() {
-  //   axios
-  //     .get(`/api/contacts/getall/${state.user.id}`)
-  //     .then(response => {
-  //       if (response.status === 200) {
-  //         console.log("loadContacts() from ListCotacts.js has run:", response.data.contacts);
-  //         dispatch({ type: SET_CONTACTS, contacts: response.data.contacts });
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log({ message: error.message });
-  //       console.log(error);
-  //     });
-  // }
-
-  // const deleteItem = (uid, itemid) => {
-  //   axios
-  //     .delete(`/api/contacts/delete/${uid}/${itemid}`)
-  //     .then(response => {
-  //       if (response.status === 200) {
-  //         console.log("Successfully deleted.");
-  //         loadContacts();
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log({ message: error.message });
-  //       console.log(error);
-  //     });
-  // };
+  }
 
   return (
     <div>

@@ -10,6 +10,10 @@ const ListPlans = () => {
   const [state, dispatch] = useStoreContext();
 
   useEffect(() => {
+    loadPlans();
+  }, [state.plans, dispatch, state.user.id]);
+
+  function loadPlans() {
     axios
       .get(`/api/plans/getallbyuser/${state.user.id}`)
       .then(response => {
@@ -22,22 +26,7 @@ const ListPlans = () => {
         console.log({ message: error.message });
         console.log(error);
       });
-  }, [dispatch, state.user.id]);
-
-  // function loadPlans() {
-  //   axios
-  //     .get(`/api/plans/getallbyuser/${state.user.id}`)
-  //     .then(response => {
-  //       if (response.status === 200) {
-  //         console.log("loadPlans() from ListPlans component has run:", response.data.plans);
-  //         dispatch({ type: SET_PLANS, plans: response.data.plans });
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log({ message: error.message });
-  //       console.log(error);
-  //     });
-  // }
+  }
 
   // const deleteItem = (uid, itemid) => {
   //   axios

@@ -4,16 +4,15 @@ require("dotenv").config();
 // Requiring necessary npm packages
 const express = require("express");
 
-const bodyParser = require('body-parser'); //TWILIO
-const pino = require('express-pino-logger')(); //TWILIO
+const bodyParser = require("body-parser"); //TWILIO
+const pino = require("express-pino-logger")(); //TWILIO
 
-const favicon = require('serve-favicon');
-const path = require('path');
+const favicon = require("serve-favicon");
+const path = require("path");
 
 const mysql = require("mysql");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
-const path = require("path");
 
 // Requiring passport as we've configured it
 const passport = require("passport");
@@ -40,17 +39,16 @@ let connection;
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-  connection = mysql.createConnection(
-    {
-      host: process.env.JAWSDB_URL,
-    });
+  connection = mysql.createConnection({
+    host: process.env.JAWSDB_URL
+  });
 } else {
   connection = mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    database: process.env.DB_DB,
+    database: process.env.DB_DB
   });
 }
 
@@ -82,11 +80,12 @@ app.use(passport.session());
 app.use(routes);
 const db = require("./models");
 
-
-db.sequelize.sync(
-  // { force: true }
-).then(function () {
-  app.listen(PORT, function () {
-    console.log("App listening on PORT " + PORT);
+db.sequelize
+  .sync({
+    //  force: true
+  })
+  .then(function () {
+    app.listen(PORT, function () {
+      console.log("App listening on PORT " + PORT);
+    });
   });
-});

@@ -2,12 +2,13 @@
 import React, { Component } from "react";
 //import { Avatar } from '@material-ui/core';
 import Image from 'react-bootstrap/Image';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
-
-
-
+import { Col, Row, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import GetUserFirstName from "./SubComponents/GetUserFirstName";
+import GetUserLastName from "./SubComponents/GetUserLastName";
+import GetUserEmail from "./SubComponents/GetUserEmail";
+import GetUserPhone from "./SubComponents/GetUserPhone";
+import GetUserAddress from "./SubComponents/GetUserAddress";
 
 export default class Profile extends Component {
   render() {
@@ -31,9 +32,14 @@ export default class Profile extends Component {
         <div className="row">
           <div className="col-md-6">
             <div className="mt-3 ml-3 mr-3">
-              <h5>Add Template</h5>
               <hr />
-              {/* <AddTemplate /> */}
+              <p>
+                <GetUserFirstName /> <GetUserLastName /> <br />
+                <GetUserEmail /> <br />
+                <GetUserPhone /> <br />
+                <GetUserAddress /> <br />
+
+              </p>
             </div>
           </div>
         </div>

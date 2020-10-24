@@ -9,6 +9,7 @@ import ModalBody from "react-bootstrap/ModalBody";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
@@ -22,12 +23,17 @@ const AddContact = () => {
     relationship: "",
     email: "",
     mobile: "",
+    mobilecc: +1,
+    mobileac: "",
+    mobilefirst: "",
+    mobilelast: "",
     groups: []
   });
 
   const [showContactAddModal, setShowContactAddModal] = useState(false);
 
-  const [preventSubmit, setPreventSubmit] = useState(true);
+  // const [preventSubmit, setPreventSubmit] = useState(true);
+
   // Handles updating the new contact whenever a change event or keytroke occurs.
   const handleChange = event => {
     // Sets a generic name and value so that newContact updates whenever any field is updated,
@@ -35,27 +41,15 @@ const AddContact = () => {
     const { name, value } = event.target;
     console.log(name, value);
     setNewContact({ ...newContact, [name]: value });
-    if (
-      newContact.firstname !== "" &&
-      newContact.lastname !== "" &&
-      newContact.nickname !== "" &&
-      newContact.relationship !== "" &&
-      newContact.email !== "" &&
-      newContact.mobile !== ""
-    ) {
-      setPreventSubmit(false);
-    }
+    // checkSubmit();
   };
 
   const handleMultiChange = event => {
     const { options, name } = event.target;
-
     const selected = [];
-
     for (let i = 0; i < options.length; i++) {
       if (options[i].selected) selected.push(options[i].value);
     }
-
     setNewContact({ ...newContact, [name]: selected });
   };
 
@@ -63,6 +57,8 @@ const AddContact = () => {
     // Prevents page refresh thereby losing info
     event.preventDefault();
     dispatch({ type: LOADING });
+    const compiledMobile = newContact.mobilecc + newContact.mobileac + newContact.mobilefirst + newContact.mobilelast;
+    setNewContact({ ...newContact, mobile: compiledMobile });
     axios
       .post(`/api/contacts/add/${state.user.id}`, {
         firstname: newContact.firstname,
@@ -175,6 +171,51 @@ const AddContact = () => {
                 </div>
                 <div id="relationshipError" />
               </div>
+              <div className="form-group" style={{ margin: "30px 0 25px 0" }}>
+                <Form.Row>
+                  <p className="small text-muted ml-1 mr-5">
+                    Mobile Phone <br />
+                    (e.g. 336-555-9190)
+                  </p>
+                  <br />
+                  <Col>
+                    <Form.Control
+                      inline
+                      controlId="mobileac"
+                      type="text"
+                      htmlsize="3"
+                      name="mobileac"
+                      onChange={handleChange}
+                      value={newContact.mobileac}
+                      placeholder="***"
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      inline
+                      controlId="mobilefirst"
+                      type="text"
+                      htmlsize="3"
+                      name="mobilefirst"
+                      onChange={handleChange}
+                      value={newContact.mobilefirst}
+                      placeholder="***"
+                    />
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      inline
+                      controlId="mobilelast"
+                      type="text"
+                      htmlsize="4"
+                      name="mobilelast"
+                      onChange={handleChange}
+                      value={newContact.mobilelast}
+                      placeholder="****"
+                    />
+                  </Col>
+                </Form.Row>
+              </div>
               <div className="form-group" style={{ margin: "0 0 10px 0" }}>
                 <div className="e-float-input">
                   <input
@@ -195,6 +236,7 @@ const AddContact = () => {
                     type="text"
                     id="mobile"
                     name="mobile"
+                    noValidate
                     style={{ width: "100%" }}
                     placeholder="Mobile Phone"
                     value={newContact.mobile}
@@ -249,7 +291,7 @@ const AddContact = () => {
                   style={{
                     backgroundColor: "#E8C547"
                   }}
-                  disabled={preventSubmit}
+                  // disabled={preventSubmit}
                   onClick={handleSubmit}
                 >
                   <span style={{ fontSize: "15px" }}>Add Contact</span>

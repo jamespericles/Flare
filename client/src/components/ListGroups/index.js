@@ -10,6 +10,10 @@ const ListGroups = () => {
   const [state, dispatch] = useStoreContext();
 
   useEffect(() => {
+    loadGroups();
+  }, [state.groups, dispatch, state.user.id]);
+
+  function loadGroups() {
     axios
       .get(`/api/groups/getallbyuser/${state.user.id}`)
       .then(response => {
@@ -22,37 +26,7 @@ const ListGroups = () => {
         console.log({ message: error.message });
         console.log(error);
       });
-  }, [dispatch, state.user.id]);
-
-  // function loadGroups() {
-  //   axios
-  //     .get(`/api/groups/getallbyuser/${state.user.id}`)
-  //     .then(response => {
-  //       if (response.status === 200) {
-  //         console.log("loadgroups() from ListGroups component has run:", response.data.groups);
-  //         dispatch({ type: SET_GROUPS, groups: response.data.groups });
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log({ message: error.message });
-  //       console.log(error);
-  //     });
-  // }
-
-  // const deleteItem = (uid, itemid) => {
-  //   axios
-  //     .delete(`/api/groups/delete/${uid}/${itemid}`)
-  //     .then(response => {
-  //       if (response.status === 200) {
-  //         console.log("Successfully deleted.");
-  //         loadGroups();
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log({ message: error.message });
-  //       console.log(error);
-  //     });
-  // };
+  }
 
   return (
     <div>

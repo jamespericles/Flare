@@ -1,25 +1,30 @@
 // Requiring dotenv for serer variable replacement
 require("dotenv").config();
+
 // Requiring necessary npm packages
 const express = require("express");
+
 const bodyParser = require('body-parser'); //TWILIO
 const pino = require('express-pino-logger')(); //TWILIO
 
-// //const favicon = require('serve-favicon');
-// //const path = require('path');
+const favicon = require('serve-favicon');
+const path = require('path');
 
 const mysql = require("mysql");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
+const path = require("path");
 
 // Requiring passport as we've configured it
 const passport = require("passport");
+
 // Requiring our routes
 const routes = require("./routes");
 
 // Creating express app and configuring middleware needed for authentication
 const app = express();
-// //app.use(favicon(path.join(__dirname, 'client', 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, "client", "public", "favicon.ico")));
+
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 3001;
 
@@ -35,7 +40,6 @@ let connection;
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-
   connection = mysql.createConnection(
     {
       host: process.env.JAWSDB_URL,
@@ -54,7 +58,7 @@ if (process.env.NODE_ENV === "production") {
 const sessionStore = new MySQLStore(
   {
     checkExpirationInterval: parseInt(process.env.DB_CHECK_EXP_INTERVAL, 10),
-    expiration: parseInt(process.env.DB_EXPIRATION, 10),
+    expiration: parseInt(process.env.DB_EXPIRATION, 10)
   },
   connection
 );
@@ -68,7 +72,7 @@ app.use(
     saveUninitialized: true,
     secret: process.env.DB_SECRET,
     store: sessionStore,
-    cookie: { expires: expireDate },
+    cookie: { expires: expireDate }
   })
 );
 app.use(passport.initialize());
@@ -77,6 +81,7 @@ app.use(passport.session());
 // using our routes required at the outset of server dependencies
 app.use(routes);
 const db = require("./models");
+
 
 db.sequelize.sync(
   // { force: true }

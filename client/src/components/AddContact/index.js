@@ -3,12 +3,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import { LOADING, SAVE_CONTACT } from "../../store/actions";
 import { useStoreContext } from "../../store/store";
-import Modal from 'react-bootstrap/Modal';
-import ModalFooter from 'react-bootstrap/ModalFooter';
-import ModalBody from 'react-bootstrap/ModalBody';
-import ModalTitle from 'react-bootstrap/ModalTitle';
-import ModalHeader from 'react-bootstrap/ModalHeader';
-import Button from 'react-bootstrap/Button';
+import Modal from "react-bootstrap/Modal";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import ModalBody from "react-bootstrap/ModalBody";
+import ModalTitle from "react-bootstrap/ModalTitle";
+import ModalHeader from "react-bootstrap/ModalHeader";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
 
 const AddContact = () => {
   const [state, dispatch] = useStoreContext();
@@ -20,23 +22,32 @@ const AddContact = () => {
     relationship: "",
     email: "",
     mobile: "",
+    GroupId: ""
   });
 
   const [showContactAddModal, setShowContactAddModal] = useState(false);
 
-  const [preventSubmit, setPreventSubmit] = useState(true)
+  const [preventSubmit, setPreventSubmit] = useState(true);
   // Handles updating the new contact whenever a change event or keytroke occurs.
-  const handleChange = (event) => {
-    // Sets a generic name and value so that newContact updates whenever any field is updated, 
+  const handleChange = event => {
+    // Sets a generic name and value so that newContact updates whenever any field is updated,
     // and updates the field being with the current value of that field.
     const { name, value } = event.target;
+    console.log(name, value);
     setNewContact({ ...newContact, [name]: value });
-    if (newContact.firstname !== "" && newContact.lastname !== "" && newContact.nickname !== "" && newContact.relationship !== "" && newContact.email !== "" && newContact.mobile !== "") {
+    if (
+      newContact.firstname !== "" &&
+      newContact.lastname !== "" &&
+      newContact.nickname !== "" &&
+      newContact.relationship !== "" &&
+      newContact.email !== "" &&
+      newContact.mobile !== ""
+    ) {
       setPreventSubmit(false);
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     // Prevents page refresh thereby losing info
     event.preventDefault();
     dispatch({ type: LOADING });
@@ -49,14 +60,15 @@ const AddContact = () => {
         email: newContact.email,
         mobile: newContact.mobile,
         UserId: state.user.id,
+        GroupId: newContact.GroupId
       })
-      .then((response) => {
+      .then(response => {
         if (response.status === 200) {
-          dispatch({type: SAVE_CONTACT, contact: newContact});
+          dispatch({ type: SAVE_CONTACT, contact: newContact });
           setShowContactAddModal(true);
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log({ message: error.message });
         console.log(error);
       });
@@ -66,28 +78,19 @@ const AddContact = () => {
       nickname: "",
       relationship: "",
       email: "",
-      mobile: "",
+      mobile: ""
     });
   };
 
   function MyVerticallyCenteredModal(props) {
     return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+      <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <ModalHeader>
-          <ModalTitle id="contained-modal-title-vcenter">
-            Modal heading
-          </ModalTitle>
+          <ModalTitle id="contained-modal-title-vcenter">Modal heading</ModalTitle>
         </ModalHeader>
         <ModalBody>
           <h4>Success! New Contact Saved</h4>
-          <p>
-            Your new contact has been successfully saved to your contacts.  Now add another! 
-          </p>
+          <p>Your new contact has been successfully saved to your contacts. Now add another!</p>
         </ModalBody>
         <ModalFooter>
           <Button onClick={props.onHide}>Close</Button>
@@ -99,7 +102,6 @@ const AddContact = () => {
   return (
     <div className="control-pane">
       <div className="control-section">
-        
         <div className="validation_wrapper">
           <div className="control_wrapper" id="control_wrapper">
             <form id="addContact" method="post">
@@ -189,13 +191,45 @@ const AddContact = () => {
                 </div>
                 <div id="mobileError" />
               </div>
+              <div className="form-group" style={{ margin: "0 0 10px 0" }}>
+                <div className="e-float-input">
+                  <input
+                    type="text"
+                    id="GroupId"
+                    name="GroupId"
+                    style={{ width: "100%" }}
+                    placeholder="Select all Groups this Contact should be included in"
+                    value={newContact.GroupId}
+                    onChange={handleChange}
+                  />
+                </div>
+                {state.groups !== null && state.groups.length > 0 ? (
+                  <Form.Group controlId="exampleForm.ControlSelect2">
+                    <p className="small text-muted">Multi-Select Group Assignment. (e.g. CMD or CTRL + Click)</p>
+                    <Form.Label>Example multiple select</Form.Label>
+                    <Form.Control as="select" multiple name="groupSelection">
+                      {state.groups.map(group => {
+                        return (
+                          <option key={`group-${group.id}`} value={group.id}>
+                            {group.groupname}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form.Group>
+                ) : (
+                  <p className="small">
+                    <Link to="/templates">Create a group</Link> first and then assign your contacts to them.
+                  </p>
+                )}
+              </div>
               <div className="submitBtn">
                 <button
                   className="submit-btn e-btn btn btn-lg btn-block"
                   id="submit-btn"
                   type="submit"
                   style={{
-                    backgroundColor: "#E8C547",
+                    backgroundColor: "#E8C547"
                   }}
                   disabled={preventSubmit}
                   onClick={handleSubmit}
@@ -207,9 +241,9 @@ const AddContact = () => {
             <div id="confirmationDialog" />{" "}
             <MyVerticallyCenteredModal
               show={showContactAddModal}
-              onHide={(() => {
+              onHide={() => {
                 setShowContactAddModal(false);
-              })}
+              }}
             />
           </div>
         </div>

@@ -6,19 +6,19 @@
 @import "../../../node_modules/@syncfusion/ej2-react-calendars/styles/material.css";
 
 .tabnav .card-header-tabs a {
-    font-size: 75%;
-} 
-
-
-.nav-link {
-    padding: 5px 10px 5px 10px;
+  font-size: 75%;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    background-color: #E8C547;
+.nav-link {
+  padding: 5px 10px 5px 10px;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: #e8c547;
 }
 
 a {
-    color: #00A8BA;
-    font-size: 12px;
+  color: #00a8ba;
+  font-size: 12px;
 }

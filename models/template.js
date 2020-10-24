@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: { allowNull: false },
+        foreignKey: { allowNull: false }
       });
       this.belongsToMany(models.Plan, { through: models.TemplatePlans });
     }
@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       val: DataTypes.STRING,
       contacts: DataTypes.INTEGER,
       groups: DataTypes.INTEGER,
-      plans: DataTypes.INTEGER,
+      plans: DataTypes.INTEGER
     },
     {
       sequelize,
-      modelName: "Template",
+      modelName: "Template"
     }
   );
 

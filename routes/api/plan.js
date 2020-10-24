@@ -26,8 +26,8 @@ router.get("/getallbyuser/:userid", async (req, res) => {
   plans = await Plan.findAll({
     // based on the user id in the params of the api
     where: {
-      UserId: req.params.userid,
-    },
+      UserId: req.params.userid
+    }
   });
   // if the user id in the params exists...
   if (plans) {
@@ -51,8 +51,8 @@ router.get("/getallbycontact/:userid/:contactid", async (req, res) => {
     // based on the user id in the params of the api
     where: {
       UserId: req.params.userid,
-      contacts: req.params.contactid,
-    },
+      contacts: req.params.contactid
+    }
   });
   // if the user id in the params exists...
   if (plans) {
@@ -76,8 +76,8 @@ router.get("/getallbygroup/:userid/:groupid", async (req, res) => {
     // based on the user id in the params of the api
     where: {
       UserId: req.params.userid,
-      groups: req.params.groupid,
-    },
+      groups: req.params.groupid
+    }
   });
   // if the user id in the params exists...
   if (plans) {
@@ -101,8 +101,8 @@ router.get("/getone/:userid/:planname", async (req, res) => {
     // based on the contact nickname in the params of the api
     where: {
       planname: req.params.planname,
-      UserId: req.params.userid,
-    },
+      UserId: req.params.userid
+    }
   });
   // if the user id in the params exists...
   if (plan) {
@@ -125,8 +125,8 @@ router.get("/getonebyuid/:userid/:planid", async (req, res) => {
     // based on the contact nickname in the params of the api
     where: {
       id: req.params.planid,
-      UserId: req.params.userid,
-    },
+      UserId: req.params.userid
+    }
   });
   // if the user id in the params exists...
   if (plan) {
@@ -146,7 +146,7 @@ router.post("/add/:userid", async function (req, res) {
   plan = await Plan.findOrCreate({
     where: {
       UserId: req.params.userid,
-      planname: req.body.planname,
+      planname: req.body.planname
     },
     defaults: {
       planname: req.body.planname,
@@ -156,8 +156,8 @@ router.post("/add/:userid", async function (req, res) {
       durationBeforeExecution: req.body.durationBeforeExecution,
       activatestart: req.body.activatestart,
       activateend: req.body.activateend,
-      executeplan: req.body.executeplan,
-    },
+      executeplan: req.body.executeplan
+    }
   });
   if (plan) {
     res.json({ plan });
@@ -174,8 +174,8 @@ router.put("/update/:userid/:planid", async function (req, res) {
   plan = await Plan.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.planid,
-    },
+      id: req.params.planid
+    }
   });
   if (plan) {
     try {
@@ -196,8 +196,8 @@ router.put("/update/:userid/:planid", async function (req, res) {
         {
           where: {
             UserId: req.params.userid,
-            id: req.params.planid,
-          },
+            id: req.params.planid
+          }
         }
       );
       return res.json(plan);
@@ -216,16 +216,16 @@ router.delete("/delete/:userid/:planid", async function (req, res) {
   plan = await Plan.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.planid,
-    },
+      id: req.params.planid
+    }
   });
   if (plan) {
     try {
       await Plan.destroy({
         where: {
           UserId: req.params.userid,
-          id: req.params.planid,
-        },
+          id: req.params.planid
+        }
       });
       return res.json({ status: "ok" });
     } catch (err) {

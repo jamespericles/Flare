@@ -22,7 +22,7 @@ const AddContact = () => {
     relationship: "",
     email: "",
     mobile: "",
-    GroupId: ""
+    groups: []
   });
 
   const [showContactAddModal, setShowContactAddModal] = useState(false);
@@ -45,6 +45,18 @@ const AddContact = () => {
     ) {
       setPreventSubmit(false);
     }
+  };
+
+  const handleMultiChange = event => {
+    const { options, name } = event.target;
+
+    const selected = [];
+
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) selected.push(options[i].value);
+    }
+
+    setNewContact({ ...newContact, [name]: selected });
   };
 
   const handleSubmit = event => {
@@ -207,7 +219,13 @@ const AddContact = () => {
                   <Form.Group controlId="exampleForm.ControlSelect2">
                     <p className="small text-muted">Multi-Select Group Assignment. (e.g. CMD or CTRL + Click)</p>
                     <Form.Label>Example multiple select</Form.Label>
-                    <Form.Control as="select" multiple name="groupSelection">
+                    <Form.Control
+                      as="select"
+                      multiple
+                      name="groups"
+                      value={newContact.groups}
+                      onChange={handleMultiChange}
+                    >
                       {state.groups.map(group => {
                         return (
                           <option key={`group-${group.id}`} value={group.id}>

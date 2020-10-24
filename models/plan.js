@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: { allowNull: false },
+        foreignKey: { allowNull: false }
       });
       this.hasOne(models.Template);
     }
@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       activateend: DataTypes.DATE,
       executeplan: DataTypes.BOOLEAN,
       contacts: DataTypes.INTEGER,
-      groups: DataTypes.INTEGER,
+      groups: DataTypes.INTEGER
     },
     {
       sequelize,
-      modelName: "Plan",
+      modelName: "Plan"
     }
   );
 

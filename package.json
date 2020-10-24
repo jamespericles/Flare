@@ -37,6 +37,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "react": "^16.13.0",
+    "react-bootstrap-multiselect": "^2.4.1",
     "react-dom": "^16.14.0",
     "react-icons": "^3.11.0",
     "react-native-web": "^0.14.1",

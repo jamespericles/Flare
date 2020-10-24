@@ -1,30 +1,30 @@
 // This component is the simple navbar shown on the login/account create screens...
 // It is still currently used by will likely be replaced...
-import React from 'react';
-import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
-import { LOADING, UNSET_USER } from '../store/actions';
-import { useStoreContext } from '../store/store';
+import React from "react";
+import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
+import { LOADING, UNSET_USER } from "../store/actions";
+import { useStoreContext } from "../store/store";
 
 const Navbar = () => {
   const [state, dispatch] = useStoreContext();
   const history = useHistory();
 
-  const logout = (event) => {
+  const logout = event => {
     event.preventDefault();
 
     dispatch({ type: LOADING });
 
     axios
-      .get('/api/users/logout')
-      .then((response) => {
+      .get("/api/users/logout")
+      .then(response => {
         if (response.status === 200) {
           dispatch({ type: UNSET_USER });
-          history.replace('/login');
+          history.replace("/login");
         }
       })
-      .catch((error) => {
-        console.log('Logout error');
+      .catch(error => {
+        console.log("Logout error");
       });
   };
 

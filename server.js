@@ -37,17 +37,9 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Creating mySQL db connection for user session
-
+let connection;
 if (process.env.JAWSDB_URL) {
-  let connection = mysql.createConnection(
-    {
-      URL: process.env.JAWSDB_URL,
-    host: process.env.JAWSDB_HOST,
-    port: process.env.JAWSDB_PORT,
-    user: process.env.JAWSDB_USER,
-    password: process.env.JAWSDB_PASSWORD,
-    database: process.env.JAWSDB_DATABASE,
-})
+  connection = mysql.createConnection(process.env.JAWSDB_URL)
 } else {
   let connection = mysql.createConnection({
   host: process.env.DB_HOST,

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        onDelete: "cascade",
+        onDelete: "cascade"
       });
       this.belongsToMany(models.Group, { through: models.ContactGroups });
     }
@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       nickname: DataTypes.STRING,
       relationship: DataTypes.STRING,
       email: DataTypes.STRING,
-      mobile: DataTypes.STRING,
+      mobile: DataTypes.STRING
     },
     {
       sequelize,
-      modelName: "Contact",
+      modelName: "Contact"
     }
   );
 

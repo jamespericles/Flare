@@ -16,20 +16,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: "plans",
-          key: "id",
-        },
+          key: "id"
+        }
       },
       TemplateId: {
         type: DataTypes.INTEGER,
         references: {
           model: "templates",
-          key: "id",
-        },
-      },
+          key: "id"
+        }
+      }
     },
     {
       sequelize,
-      modelName: "TemplatePlans",
+      modelName: "TemplatePlans"
     }
   );
 

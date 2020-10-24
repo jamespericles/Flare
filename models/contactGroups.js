@@ -16,20 +16,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: "groups",
-          key: "id",
-        },
+          key: "id"
+        }
       },
       ContactId: {
         type: DataTypes.INTEGER,
         references: {
           model: "contacts",
-          key: "id",
-        },
-      },
+          key: "id"
+        }
+      }
     },
     {
       sequelize,
-      modelName: "ContactGroups",
+      modelName: "ContactGroups"
     }
   );
 

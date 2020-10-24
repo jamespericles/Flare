@@ -20,8 +20,8 @@ router.get("/getall/:userid", async (req, res) => {
   contacts = await Contact.findAll({
     // based on the user id in the params of the api
     where: {
-      UserId: req.params.userid,
-    },
+      UserId: req.params.userid
+    }
   });
   // if the user id in the params exists...
   if (contacts) {
@@ -44,8 +44,8 @@ router.get("/getone/:nickname", async (req, res) => {
   contact = await Contact.findOne({
     // based on the contact nickname in the params of the api
     where: {
-      nickname: req.params.nickname,
-    },
+      nickname: req.params.nickname
+    }
   });
   // if the user id in the params exists...
   if (contact) {
@@ -69,7 +69,7 @@ router.post("/add/:uid", async function (req, res) {
     where: {
       UserId: req.params.uid,
       nickname: req.body.nickname,
-      email: req.body.email,
+      email: req.body.email
     },
     defaults: {
       firstname: req.body.firstname,
@@ -78,8 +78,8 @@ router.post("/add/:uid", async function (req, res) {
       relationship: req.body.relationship,
       email: req.body.email,
       mobile: req.body.mobile,
-      UserId: req.params.uid,
-    },
+      UserId: req.params.uid
+    }
   });
   if (contact) {
     res.json({ contact });
@@ -98,8 +98,8 @@ router.put("/update/:userid/:contactid", async function (req, res) {
   contact = await Contact.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.contactid,
-    },
+      id: req.params.contactid
+    }
   });
   if (contact) {
     try {
@@ -112,13 +112,13 @@ router.put("/update/:userid/:contactid", async function (req, res) {
           relationship: req.body.relationship,
           email: req.body.email,
           mobile: req.body.mobile,
-          UserId: req.params.userid,
+          UserId: req.params.userid
         },
         {
           where: {
             UserId: req.params.userid,
-            id: req.params.contactid,
-          },
+            id: req.params.contactid
+          }
         }
       );
       return res.send(contact);
@@ -137,16 +137,16 @@ router.delete("/delete/:userid/:contactid", async function (req, res) {
   contact = await Contact.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.contactid,
-    },
+      id: req.params.contactid
+    }
   });
   if (contact) {
     try {
       await Contact.destroy({
         where: {
           UserId: req.params.userid,
-          id: req.params.contactid,
-        },
+          id: req.params.contactid
+        }
       });
       return res.json({ status: "ok" });
     } catch (err) {

@@ -13,14 +13,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: { allowNull: false }
       });
       this.hasMany(models.Contact);
+      this.belongsToMany(models.Plan, { through: models.GroupPlans })
     }
   }
 
   Group.init(
     {
       groupname: DataTypes.STRING,
-      contacts: DataTypes.INTEGER,
-      plans: DataTypes.INTEGER
     },
     {
       sequelize,

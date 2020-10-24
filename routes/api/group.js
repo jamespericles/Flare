@@ -7,6 +7,7 @@ const router = express.Router();
 
 //? Added Groups here:
 const Group = require("../../models").Group;
+const Contact = require("../../models").Contact;
 //?---------------------
 
 // GROUP ROUTES
@@ -190,6 +191,18 @@ router.delete("/delete/:userid/:groupid", async function (req, res) {
   } else {
     return res.status(400).json({ status: "error", message: err.message });
   }
+});
+
+router.put("/:groupId/contact/:contactId", async (req, res) => {
+  const group = await Group.findOne({ where: { id: req.params.groupId } });
+  const contact = await Contact.findOne({ where: { id: req.params.contactId } });
+
+  if (group && contact) {
+    contact.addGroup(group);
+    res.json({ status: 'ok' });
+  }
+
+  res.status(404).json({ status: 'error', message: "Group or Contact not found" });
 });
 
 //* MODULE EXPORTS ********************************

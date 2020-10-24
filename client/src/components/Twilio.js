@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-//import axios from "axios";
+
+import axios from 'axios';
+import React, { Component } from 'react';
 
 /* NEEDED AS A PLACEHOLDER ON A PAGE CALLED TWILIO W/ A ROUTE `/twilio` */
 class SMSForm extends Component {
@@ -28,35 +29,35 @@ class SMSForm extends Component {
         axios.post('/api/plans/:id/start');
     */
 
-  onSubmit(event) {
-    event.preventDefault();
-    this.setState({ submitting: true });
-    fetch("/api/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state.message)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          this.setState({
-            error: false,
-            submitting: false,
-            message: {
-              to: "",
-              body: ""
-            }
-          });
-        } else {
-          this.setState({
-            error: true,
-            submitting: false
-          });
+
+    onSubmit(event) {
+        event.preventDefault();
+        this.setState({ submitting: true });
+        axios.post('/api/plans/1/start',
+            JSON.stringify(this.state.message), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
         }
-      });
-  }
+        )
+            .then(data => {
+                if (data.success) {
+                    this.setState({
+                        error: false,
+                        submitting: false,
+                        message: {
+                            to: '',
+                            body: ''
+                        }
+                    });
+                } else {
+                    this.setState({
+                        error: true,
+                        submitting: false
+                    });
+                }
+            });
+    }
 
   render() {
     return (

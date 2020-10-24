@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "@material/react-drawer": "^0.15.0",
     "@material/react-list": "^0.15.0",
     "@material/react-material-icon": "^0.15.0",
@@ -25,6 +26,7 @@
     "@syncfusion/ej2-react-base": "^18.3.37",
     "@syncfusion/ej2-react-calendars": "^18.3.42",
     "@syncfusion/ej2-react-navigations": "^18.3.40",
+    "bootstrap": "^4.5.3",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -37,6 +39,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "react": "^16.13.0",
+    "react-bootstrap": "^1.4.0",
     "react-bootstrap-multiselect": "^2.4.1",
     "react-dom": "^16.14.0",
     "react-icons": "^3.11.0",

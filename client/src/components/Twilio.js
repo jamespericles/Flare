@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 //import axios from "axios";
 
@@ -31,14 +32,13 @@ class SMSForm extends Component {
     onSubmit(event) {
         event.preventDefault();
         this.setState({ submitting: true });
-        fetch('/api/messages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state.message)
-        })
-            .then(res => res.json())
+        axios.post('/api/plans/1/start',
+            JSON.stringify(this.state.message), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+        }
+        )
             .then(data => {
                 if (data.success) {
                     this.setState({

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: { allowNull: false },
       });
       this.hasOne(models.Template);
+      this.hasOne(models.Group);
     }
   }
 
@@ -24,9 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       durationBeforeExecution: DataTypes.INTEGER,
       activatestart: DataTypes.DATE,
       activateend: DataTypes.DATE,
-      executeplan: DataTypes.BOOLEAN,
-      contacts: DataTypes.INTEGER,
-      groups: DataTypes.INTEGER,
+      executeplan: DataTypes.BOOLEAN
     },
     {
       sequelize,

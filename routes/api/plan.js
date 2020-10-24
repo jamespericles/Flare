@@ -1,10 +1,20 @@
 const express = require("express");
 const router = express.Router();
+const cron = require('node-cron'); //TWILIO
+
+const client = require('twilio')(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+
 
 //? Added PLANS here:
 const Plan = require("../../models").Plan;
+const Template = require("../../models").Template;
+const Group = require("../../models").Group;
 //?---------------------
 
+let cronTask = null;
 // PLAN ROUTES
 
 // GET ALL PLANS BY USER
@@ -225,6 +235,67 @@ router.delete("/delete/:userid/:planid", async function (req, res) {
     return res.status(400).json({ status: "error", message: err.message });
   }
 });
+
+router.post('/:id/start', async (req, res) => {
+  /* STEPS
+    1) Make DB request for plan and join with template / group / contact
+    2) Start cron job with plan time as we the time to run
+    3) Within cron run client.messages with each contact and the template message
+  */
+
+  const plan = await Plan.findOne({ where: { id: req.params.id }, include: Group });
+
+  console.log('HERE', plan)
+  if (plan) {
+    // CRON EXAMPLE - */15 equals at 15 minutes
+    cronTask = cron.schedule('15 * * * * *', () => {
+      // Loop through contactts and send messages here
+      // task.destroy();
+
+      client.messages
+        .create({
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: req.body.to,
+          body: req.body.body
+        })
+        .then(() => {
+          res.send(JSON.stringify({ success: true }));
+        })
+        .catch(err => {
+          console.log(err);
+          res.send(JSON.stringify({ success: false }));
+        });
+    })
+  }
+
+  // Task may need to be a global variable so you can destroy it within another endpoint
+  //
+});
+
+router.put("/:planId/group/:groupId", async (req, res) => {
+  const plan = await Plan.findOne({ where: { id: req.params.planId } });
+  const group = await Group.findOne({ where: { id: req.params.groupId } });
+
+  if (group && plan) {
+    group.addPlan(plan);
+    res.json({ status: 'ok' });
+  }
+
+  res.status(404).json({ status: 'error', message: "Group or Plan not found" });
+});
+
+router.put("/:planId/template/:templateId", async (req, res) => {
+  const plan = await Plan.findOne({ where: { id: req.params.planId } });
+  const template = await Template.findOne({ where: { id: req.params.templateId } });
+
+  if (template && plan) {
+    template.addPlan(plan);
+    res.json({ status: 'ok' });
+  }
+
+  res.status(404).json({ status: 'error', message: "Template or Plan not found" });
+});
+
 
 //* MODULE EXPORTS ********************************
 //! Do not change module exports command. Required and functioning as expected.

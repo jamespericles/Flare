@@ -13,6 +13,9 @@ const planRoutes = require('./plan');
 //! Addition for Templates
 const templateRoutes = require('./template');
 //! ---------------------
+//! Addition for Twilio
+const twilioRoutes = require('./twilio');
+//! ---------------------
 
 router.use('/users', userRoutes);
 
@@ -27,6 +30,9 @@ router.use('/plans', planRoutes);
 //! ---------------------
 //! Addition for Templates
 router.use('/templates', templateRoutes);
+//! ---------------------
+//! Addition for Twilio
+router.use('/twilio', twilioRoutes);
 //! ---------------------
 
 

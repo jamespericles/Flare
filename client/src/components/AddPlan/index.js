@@ -118,7 +118,8 @@ const AddPlan = () => {
                 UserId: state.user.id,
                 activatestart: newPlan.activatestart,
                 activateend: newPlan.activateend,
-                durationBeforeExecution: newPlan.durationBeforeExecution,
+                durationBeforeExecution: 1000 * 15,
+                // newPlan.durationBeforeExecution,
                 executeplan: false 
             })
             .then((response) => {

@@ -47,7 +47,7 @@ export default function ContactItem(props) {
         <div className="row">
           <div className="col-10">
             <p className="small ml-2">
-              Nickname:&nbsp;<strong>{props.contact.nickname}</strong>
+              <span className="small text-muted">Nickname:</span>&nbsp;<strong>{props.contact.nickname}</strong>
               <br />
               <span className="text-muted" style={{ fontSize: "80%" }}>
                 Relationship: {props.contact.relationship}
@@ -62,7 +62,7 @@ export default function ContactItem(props) {
               onClick={() => deleteItem(state.user.id, props.contact.id)}
             >
               <IconContext.Provider
-                value={{ size: "1em", style: { verticalAlign: "text-top", color: "red", textAlign: "right" } }}
+                value={{ size: "1em", style: { verticalAlign: "text-top", color: "black", textAlign: "right" } }}
               >
                 <MdRemoveCircle />
               </IconContext.Provider>

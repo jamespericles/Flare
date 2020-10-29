@@ -24,7 +24,7 @@ const Navbar = () => {
         }
       })
       .catch(error => {
-        console.log("Logout error");
+        console.log("Logout error", error);
       });
   };
 

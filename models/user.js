@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.Contact, {
-        onDelete: "cascade"
+        onDelete: "cascade",
       });
       this.hasMany(models.Group, {
-        onDelete: "cascade"
+        onDelete: "cascade",
       });
       this.hasMany(models.Template, {
-        onDelete: "cascade"
+        onDelete: "cascade",
       });
       this.hasMany(models.Plan, {
-        onDelete: "cascade"
+        onDelete: "cascade",
       });
     }
   }
@@ -37,11 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       mobile: DataTypes.STRING,
       salt: DataTypes.STRING(500),
       password: DataTypes.STRING(500),
-      last_login: DataTypes.DATE
+      last_login: DataTypes.DATE,
     },
     {
       sequelize,
-      modelName: "User"
+      modelName: "User",
     }
   );
 

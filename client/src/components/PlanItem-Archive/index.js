@@ -66,69 +66,6 @@ export default function PlanItem(props) {
       });
   }
 
-  // const handleActiveSwitch = event => {
-  //   // const { name, value } = event.target;
-  //   const newduration = selectedPlan.activateend - selectedPlan.activatestart;
-  //   if (isChecked === false) {
-  //     setIsChecked(true);
-  //     setSelectedPlan({ ...selectedPlan, isActive: true });
-  //     axios
-  //       .put(`/api/plans/update/${state.user.id}/${selectedPlan.id}`, {
-  //         id: selectedPlan.id,
-  //         planname: selectedPlan.planname,
-  //         isActive: true,
-  //         isHome: selectedPlan.isHome,
-  //         durationBeforeExecution: newduration,
-  //         activatestart: selectedPlan.activatestart,
-  //         activateend: selectedPlan.activateend,
-  //         executeplan: selectedPlan.executeplan,
-  //         UserId: state.user.id,
-  //         contacts: selectedPlan.contacts,
-  //         groups: selectedPlan.groups
-  //       })
-  //       .then(response => {
-  //         if (response.status === 200) {
-  //           dispatch({ type: SAVE_PLAN, plan: selectedPlan });
-  //           console.log("response after update", response);
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.log({ message: error.message });
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     setIsChecked(false);
-  //     setSelectedPlan({ ...selectedPlan, isActive: false });
-  //     // event.preventDefault();
-  //     axios
-  //       .put(`/api/plans/update/${state.user.id}/${selectedPlan.id}`, {
-  //         id: selectedPlan.id,
-  //         planname: selectedPlan.planname,
-  //         isActive: false,
-  //         isHome: selectedPlan.isHome,
-  //         durationBeforeExecution: newduration,
-  //         activatestart: selectedPlan.activatestart,
-  //         activateend: selectedPlan.activateend,
-  //         executeplan: selectedPlan.executeplan,
-  //         UserId: state.user.id,
-  //         contacts: selectedPlan.contacts,
-  //         groups: selectedPlan.groups
-  //       })
-  //       .then(response => {
-  //         if (response.status === 200) {
-  //           dispatch({ type: SAVE_PLAN, plan: selectedPlan });
-  //           console.log("response after update", response);
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.log({ message: error.message });
-  //         console.log(error);
-  //       });
-  //   }
-  //   // handleSubmit(event);
-  //   console.log("after submission, based on switching isActive:", selectedPlan);
-  // };
-
   const handleActiveSwitch = event => {
     // const { name, value } = event.target;
     const newduration = selectedPlan.activateend - selectedPlan.activatestart;
@@ -159,21 +96,10 @@ export default function PlanItem(props) {
           console.log({ message: error.message });
           console.log(error);
         });
-      axios
-        .post(`api/plans/${state.user.id}/${selectedPlan.id}/start`)
-        .then(response => {
-          if (response.status === 200) {
-            console.log("response after update", response);
-            console.log("message sent");
-          }
-        })
-        .catch(error => {
-          console.log({ message: error.message });
-          console.log(error);
-        });
     } else {
       setIsChecked(false);
       setSelectedPlan({ ...selectedPlan, isActive: false });
+      // event.preventDefault();
       axios
         .put(`/api/plans/update/${state.user.id}/${selectedPlan.id}`, {
           id: selectedPlan.id,
@@ -198,22 +124,7 @@ export default function PlanItem(props) {
           console.log({ message: error.message });
           console.log(error);
         });
-      // handleSubmit(event);
-      console.log("after submission, based on switching isActive:", selectedPlan);
     }
-
-    axios
-      .put(`/api/plans/stop`)
-      .then(response => {
-        if (response.status === 200) {
-          console.log("response after update", response);
-        }
-      })
-      .catch(error => {
-        console.log({ message: error.message });
-        console.log(error);
-      });
-
     // handleSubmit(event);
     console.log("after submission, based on switching isActive:", selectedPlan);
   };
@@ -233,10 +144,10 @@ export default function PlanItem(props) {
       });
   };
 
-  // const handleChange = event => {
-  //   const { name, value } = event.target;
-  //   setSelectedPlan({ ...selectedPlan, [name]: value });
-  // };
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setSelectedPlan({ ...selectedPlan, [name]: value });
+  };
 
   // function run on submit of the activatestart activateed selection
   const handleSubmit = event => {
@@ -268,7 +179,7 @@ export default function PlanItem(props) {
       });
   };
 
-  //function to set the minimum selectable date to no earlier than today.
+  // function to set the minimum selectable date to no earlier than today.
   // const getnow = () => {
   //   return Date.now();
   // };
@@ -279,10 +190,10 @@ export default function PlanItem(props) {
   const activateStartMili = convertStartDate.getMilliseconds();
   const convertedStartDate = convertStartDate.toLocaleString();
   const activateTrue = activateStartMili < tdayMili ? "Not Scheduled" : convertedStartDate;
-  // const convertEndDate = new Date(selectedPlan.activateend);
-  // const activateEndMili = convertEndDate.getMilliseconds();
-  // const convertedEndDate = convertEndDate.toLocaleString();
-  // const activateEndTrue = activateEndMili < tdayMili ? "Not Scheduled" : convertedEndDate;
+  const convertEndDate = new Date(selectedPlan.activateend);
+  const activateEndMili = convertEndDate.getMilliseconds();
+  const convertedEndDate = convertEndDate.toLocaleString();
+  const activateEndTrue = activateEndMili < tdayMili ? "Not Scheduled" : convertedEndDate;
   const newdurationBeforeExecution =
     selectedPlan.durationBeforeExecution === null ? "Duration Not Set" : selectedPlan.durationBeforeExecution;
 
@@ -342,7 +253,14 @@ export default function PlanItem(props) {
                   <span key={`turnontab-span2-${props.plan.id}`} className="text-muted" style={{ fontSize: "80%" }}>
                     Instead of turning on manually, you can schedule your plan to start watching at a specific time and
                     date.
-                  </span>
+                  </span>{" "}
+                  <br />
+                  <strong>Scheduled End:</strong> {activateEndTrue} <br />
+                  <span key={`turnontab-span3-${props.plan.id}`} className="text-muted" style={{ fontSize: "80%" }}>
+                    You can can schedule a specific end-time if you've decided when you'll turn your plan off, and if it
+                    isn't off then it should definitely alert your contacts.
+                  </span>{" "}
+                  <br />
                 </p>
               </div>
               <Row key={`activatenowrow-${props.plan.id}`} className="mt-4">
@@ -359,7 +277,6 @@ export default function PlanItem(props) {
                       </span>
                     </label>
                     <SwitchComponent
-                      key={`activatenowchecked-${props.plan.id}`}
                       id={`activatenowchecked-${props.plan.id}`}
                       name="activeToggle"
                       value={selectedPlan.isActive}
@@ -390,11 +307,11 @@ export default function PlanItem(props) {
                         min={new Date()}
                         placeholder="Select Start Date &amp; Time."
                         // value={selectedPlan.activatestart}
-                        // onChange={handleChange}
-                        // onSelect={handleChange}
-                        // onBlur={handleChange}
-                        // onClick={handleChange}
-                        // onSubmit={handleChange}
+                        onChange={handleChange}
+                        onSelect={handleChange}
+                        onBlur={handleChange}
+                        onClick={handleChange}
+                        onSubmit={handleChange}
                         aria-describedby="activatestartHelpBlock"
                       />
                       <small
@@ -415,9 +332,9 @@ export default function PlanItem(props) {
                         step="15"
                         placeholder="Select End Date &amp; Time."
                         // value={selectedPlan.activateend}
-                        // onChange={handleChange}
-                        // onSelect={handleChange}
-                        // onSubmit={handleChange}
+                        onChange={handleChange}
+                        onSelect={handleChange}
+                        onSubmit={handleChange}
                         aria-describedby="activateendHelpBlock"
                       />
                       <small

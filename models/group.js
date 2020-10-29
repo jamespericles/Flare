@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: { allowNull: false }
+        foreignKey: { allowNull: false },
       });
       this.belongsToMany(models.Contact, { through: models.ContactGroups });
       this.belongsToMany(models.Plan, { through: models.GroupPlans });
@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
 
   Group.init(
     {
-      groupname: DataTypes.STRING
+      groupname: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: "Group"
+      modelName: "Group",
     }
   );
 

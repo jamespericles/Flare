@@ -1,32 +1,37 @@
 // Component that maps through the contacts in the db associated with the user and renders them
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useStoreContext } from "../../store/store";
 import { SET_CONTACTS } from "../../store/actions";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import ContactItem from "../ContactItem";
 
 const ListContacts = () => {
   const [state, dispatch] = useStoreContext();
+  const [currContacts, setCurrContacts] = useState(state.contacts);
 
   useEffect(() => {
-    loadContacts();
-  }, [dispatch, state.contacts, state.user.id]);
+    if (currContacts !== state.contacts) {
+      dispatch({ type: SET_CONTACTS, contacts: currContacts });
+      setCurrContacts(currContacts);
+    }
+    console.log("contacts", state.contacts);
+  }, [state.user.id, dispatch, currContacts]);
 
-  function loadContacts() {
-    axios
-      .get(`/api/contacts/getall/${state.user.id}`)
-      .then(response => {
-        if (response.status === 200) {
-          console.log("loadContacts() from ListCotacts.js has run:", response.data.contacts);
-          dispatch({ type: SET_CONTACTS, contacts: response.data.contacts });
-        }
-      })
-      .catch(error => {
-        console.log({ message: error.message });
-        console.log(error);
-      });
-  }
+  // function loadContacts() {
+  //   axios
+  //     .get(`/api/contacts/getall/${state.user.id}`)
+  //     .then(response => {
+  //       if (response.status === 200) {
+  //         console.log("loadContacts() from ListCotacts.js has run:", response.data.contacts);
+  //         dispatch({ type: SET_CONTACTS, contacts: response.data.contacts });
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log({ message: error.message });
+  //       console.log(error);
+  //     });
+  // }
 
   return (
     <div>

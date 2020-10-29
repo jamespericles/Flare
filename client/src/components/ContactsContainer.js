@@ -29,7 +29,7 @@ export default class Contacts extends Component {
         </div>
         <div className="row">
           <div className="col-md-6">
-            <div className="mt-3 ml-3 mr-3">
+            <div className="mt-3 ml-3 mr-3 mb-5">
               <h5>Add Contact</h5>
               <hr />
               <AddContact />

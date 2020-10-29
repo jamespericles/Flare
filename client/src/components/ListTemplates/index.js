@@ -1,32 +1,36 @@
 // Component that maps through the templates in the db associated with the user and renders them
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useStoreContext } from "../../store/store";
 import { SET_TEMPLATES } from "../../store/actions";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import TemplateItem from "../TemplateItem";
 
 const ListTemplates = () => {
   const [state, dispatch] = useStoreContext();
+  const [currTemplates, setCurrTemplates] = useState(state.templates);
 
   useEffect(() => {
-    loadTemplates();
-  }, [state.templates, dispatch, state.user.id]);
+    if (currTemplates !== state.templates) {
+      dispatch({ type: SET_TEMPLATES, templates: currTemplates });
+      setCurrTemplates(currTemplates);
+    }
+  }, [state.user.id, dispatch, currTemplates]);
 
-  function loadTemplates() {
-    axios
-      .get(`/api/templates/getallbyuser/${state.user.id}`)
-      .then(response => {
-        if (response.status === 200) {
-          console.log("loadTemplates() from ListTemplates component has run:", response.data.templates);
-          dispatch({ type: SET_TEMPLATES, templates: response.data.templates });
-        }
-      })
-      .catch(error => {
-        console.log({ message: error.message });
-        console.log(error);
-      });
-  }
+  // function loadTemplates() {
+  //   axios
+  //     .get(`/api/templates/getallbyuser/${state.user.id}`)
+  //     .then(response => {
+  //       if (response.status === 200) {
+  //         console.log("loadTemplates() from ListTemplates component has run:", response.data.templates);
+  //         dispatch({ type: SET_TEMPLATES, templates: response.data.templates });
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log({ message: error.message });
+  //       console.log(error);
+  //     });
+  // }
 
   return (
     <div>
@@ -34,7 +38,7 @@ const ListTemplates = () => {
         <ul>
           {state.templates !== null && state.templates.length > 0 ? (
             state.templates.map((template, i) => {
-              return <TemplateItem template={template} />;
+              return <TemplateItem key={`template-${template.id}`} template={template} />;
             })
           ) : (
             <p className="small">

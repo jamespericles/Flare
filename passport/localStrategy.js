@@ -5,13 +5,13 @@ const User = require("../models").User;
 const strategy = new LocalStrategy(
   {
     usernameField: "email",
-    passwordField: "password"
+    passwordField: "password",
   },
   async function (email, password, done) {
     const user = await User.findOne({
       where: {
-        email: email
-      }
+        email: email,
+      },
     });
 
     if (user == null) {

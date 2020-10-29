@@ -47,9 +47,12 @@ export default function TemplateItem(props) {
         <div className="row">
           <div className="col-10">
             &nbsp;
-            <small>
+            <div className="small ml-2" style={{ lineHeight: "1" }}>
               <strong>{props.template.nickname}</strong>
-            </small>
+            </div>
+            <div className="small text-muted ml-4 mt-1 mb-2" style={{ lineHeight: "1", fontSize: "50%" }}>
+              {props.template.val}
+            </div>
           </div>
           <div className="col-1 pr-1">
             <Button
@@ -59,7 +62,7 @@ export default function TemplateItem(props) {
               onClick={() => deleteItem(state.user.id, props.template.id)}
             >
               <IconContext.Provider
-                value={{ size: "1em", style: { verticalAlign: "text-top", color: "red", textAlign: "right" } }}
+                value={{ size: "1em", style: { verticalAlign: "text-top", color: "black", textAlign: "right" } }}
               >
                 <MdRemoveCircle />
               </IconContext.Provider>

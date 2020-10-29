@@ -11,6 +11,9 @@ import { MdPersonAdd } from "react-icons/md";
 import { MdContactMail } from "react-icons/md";
 import { MdDevicesOther } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
+import FlareLogo5 from "../../assets/flareLogo5.png";
+import FlareLogo7 from "../../assets/flareLogo7.png";
+// import FlareLogo6 from "../../assets/flareLogo6.png";
 import GetUserFirstName from "../SubComponents/GetUserFirstName";
 
 import { enableRipple } from "@syncfusion/ej2-base";
@@ -38,7 +41,25 @@ export default class Sidebar extends Component {
           <div className="text">Menu</div>
           <span id="hamburger" className="e-icons menu" onClick={this.openClick}></span>
           <div className="header">
-            Welcome, <GetUserFirstName />! Ready to send up a <em>Flare</em>?
+            {/* <div className="row"> */}
+            {/* <div className="col-8 col-md-8 col-sm-4 col-xs-4" style={{ textAlign: "right" }}> */}
+            <span className="mr-3 pr-2">
+              Ready to send up a <em>Flare</em>?
+            </span>
+            <img src={FlareLogo5} height="30px" style={{ padding: "3px 0 5px 0" }} />
+            &nbsp;
+            <img src={FlareLogo7} height="50px" style={{ padding: "10px 0 8px 0" }} />
+            {/* </div> */}
+            {/* <div className="col-4 col-md-4 col-sm-8 col-xs-8 pr-2" style={{ margin: "auto auto", textAlign: "right" }}> */}
+            <Link className="profileLink" to="/profile" style={{ float: "right" }}>
+              <IconContext.Provider value={{ size: "1.5em", style: { color: "default" } }}>
+                <MdAccountCircle />
+              </IconContext.Provider>
+              &nbsp; Welcome back, <GetUserFirstName />
+              !&nbsp; &nbsp;
+            </Link>
+            {/* </div> */}
+            {/* </div> */}
           </div>
         </div>
         <SidebarComponent
@@ -52,6 +73,9 @@ export default class Sidebar extends Component {
           <div id="close" className="e-icons" onClick={this.closeClick}></div>
           <div className="content-area">
             <ul>
+              <li>
+                <img src={FlareLogo7} width="100px" style={{ textAlign: "center", paddingLeft: "10px" }} />
+              </li>
               <li>
                 <Logout />
               </li>
@@ -135,7 +159,7 @@ export default class Sidebar extends Component {
                     >
                       <MdAccountCircle />
                     </IconContext.Provider>{" "}
-                    Twilio
+                    Twilio Test
                   </span>
                 </Link>
               </li>

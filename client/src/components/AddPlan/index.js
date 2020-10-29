@@ -1,39 +1,50 @@
 // Component form and axios storecontact component for adding a new plan
 import axios from "axios";
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { SAVE_PLAN } from "../../store/actions";
+import { SAVE_PLAN, SET_PLANS } from "../../store/actions";
 import { useStoreContext } from "../../store/store";
-import Form from "react-bootstrap/Form";
+import Form, { Control } from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import { DateTimePickerComponent } from '@syncfusion/ej2-react-calendars';
+import Modal from "react-bootstrap/Modal";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import ModalBody from "react-bootstrap/ModalBody";
+import ModalTitle from "react-bootstrap/ModalTitle";
+import ModalHeader from "react-bootstrap/ModalHeader";
+import Button from "react-bootstrap/Button";
 import "./style.css";
+import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars";
+import { SwitchComponent } from "@syncfusion/ej2-react-buttons";
+import { rippleMouseHandler } from "@syncfusion/ej2-buttons";
 
 const AddPlan = () => {
   const [state, dispatch] = useStoreContext();
-
+  const today = new Date();
   const [newPlan, setNewPlan] = useState({
     planname: "",
     isActive: false,
     isHome: false,
     durationBeforeExecution: "",
-    activatestart: 0,
-    activateend: 0,
+    activatestart: today,
+    activateend: today,
     executeplan: 0,
     UserId: state.user.id,
-    contacts: "",
-    groups: "",
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    durationCalculated: 0
+    // days: 0,
+    // hours: 0,
+    // minutes: 0,
+    // durationCalculated: 0,
+    groups: [],
+    templates: []
   });
+  const [showPlanAddModal, setShowPlanAddModal] = useState(false);
+  const [currPlans, setCurrPlans] = useState(state.plans);
 
+  //? The toggle functionality will be handled on the plan item level
   // const [activeToggle, setActiveToggle] = useState(false);
   // const [homeToggle, setHomeToggle] = useState(false)
 
   console.log(state.user.id);
-
   // Handles updating the new contact whenever a change event or keytroke occurs.
   const handleChange = event => {
     // Sets a generic name and value so that newContact updates whenever any field is updated, and updates the field being with the current value of that field.
@@ -41,7 +52,7 @@ const AddPlan = () => {
     setNewPlan({ ...newPlan, [name]: value });
     console.log("newPlan", newPlan);
     let today = new Date();
-    console.log("today", today);
+    // console.log("today", today);
     if (event.target.name === "activatestart" || event.target.name === "activateend") {
       let converted = new Date(event.target.value);
       setNewPlan({ ...newPlan, [name]: converted });
@@ -52,6 +63,13 @@ const AddPlan = () => {
       setNewPlan({ ...newPlan, durationBeforeExecution: duration });
     }
     if (event.target.name === "activatestart") {
+      let converted = new Date(event.target.value);
+      if (event.target.value !== undefined && event.target.value < today) {
+        event.target.value = today;
+        setNewPlan({ ...newPlan, [name]: converted });
+      }
+    }
+    if (event.target.name === "activateend") {
       let converted = new Date(event.target.value);
       if (event.target.value !== undefined && event.target.value < today) {
         event.target.value = today;
@@ -81,28 +99,41 @@ const AddPlan = () => {
       setNewPlan({ ...newPlan, durationCalculated: calcDuration, durationBeforeExecution: durationInMin });
     }
   };
+  const handleMultiChange = event => {
+    const { options, name } = event.target;
+    const selected = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) selected.push(options[i].value);
+    }
+    setNewPlan({ ...newPlan, [name]: selected });
+  };
 
   const handleSubmit = event => {
+    //? Keeping in here commented out for including in future iteration
+    //? These variables are for converting user-friendlier values to milliseconds for the API to act on.
     // Prevents page refresh thereby losing info
+    // let convertedmin = newPlan.minutes * 60000;
+    // let convertedhrs = newPlan.hours * 3600000;
+    // let converteddys = newPlan.days * 86400000;
+    // let calcDuration = convertedmin + convertedhrs + converteddys;
+    // let durationInMin = calcDuration / 60000;
     event.preventDefault();
-    let convertedmin = event.target.value * 60000;
-    let convertedhrs = newPlan.hours * 3600000;
-    let converteddys = newPlan.days * 86400000;
-    let calcDuration = convertedmin + convertedhrs + converteddys;
-    let durationInMin = calcDuration / 60000;
+
     axios
       .post(`/api/plans/add/${state.user.id}`, {
         planname: newPlan.planname,
         UserId: state.user.id,
         activatestart: newPlan.activatestart,
         activateend: newPlan.activateend,
-        durationBeforeExecution: durationInMin,
-        executeplan: false
+        durationBeforeExecution: newPlan.durationBeforeExecution,
+        executeplan: newPlan.executePlan,
+        groups: newPlan.groups,
+        templates: newPlan.templates
       })
       .then(response => {
         if (response.status === 200) {
-          dispatch({ type: SAVE_PLAN, plan: response.data.plan });
-          console.log("submitted plan:", newPlan);
+          dispatch({ type: SAVE_PLAN, plan: newPlan });
+          setShowPlanAddModal(true);
         }
       })
       .catch(error => {
@@ -111,22 +142,58 @@ const AddPlan = () => {
       });
 
     setNewPlan({
+      ...newPlan,
       planname: "",
-      isActive: false,
-      isHome: false,
+      isActive: "",
       durationBeforeExecution: "",
       activatestart: "",
       activateend: "",
       executeplan: "",
       UserId: state.user.id,
-      contacts: "",
-      groups: "",
-      days: "",
-      hours: "",
-      minutes: "",
-      durationCalculated: ""
+      // days: "",
+      // hours: "",
+      // minutes: "",
+      // durationCalculated: ""
+      templates: "",
+      groups: ""
     });
+    loadPlans();
   };
+
+  function loadPlans() {
+    axios
+      .get(`/api/plans/getallbyuser/${state.user.id}`)
+      .then(response => {
+        if (response.status === 200) {
+          console.log("loadPlans() from ListPlans component has run:", response.data.plans);
+          dispatch({ type: SET_PLANS, plans: response.data.plans });
+          setCurrPlans(response.data.plans);
+        }
+      })
+      .catch(error => {
+        console.log({ message: error.message });
+        console.log(error);
+      });
+  }
+
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+        <ModalHeader>
+          <ModalTitle id="contained-modal-title-vcenter">Success! New Plan Saved</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+          <p>
+            Your new plan has been successfully saved. You can add a new plan, or now activate and use this Flare plan
+            when you need it.
+          </p>
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={props.onHide}>Close</Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
 
   return (
     <div className="control-pane">
@@ -136,104 +203,122 @@ const AddPlan = () => {
             <Form id="addPlan" method="post">
               <Row>
                 <Col>
-                  <Form.Control
-                    placeholder="Plan Name"
-                    type="text"
-                    id="planname"
-                    name="planname"
-                    value={newPlan.planname}
-                    onChange={handleChange}
-                    aria-describedby="plannameHelpBlock"
-                  />
-                  <small id="plannameHelpBlock" className="form-text text-muted">
-                    Your plan name should be a scenario that you quickly and easily recognize like "sketchy place" or
-                    "walking home alone"
+                  <div className="form-group" style={{ margin: "10px 0 10px 0" }}>
+                    <Form.Control
+                      placeholder="Plan Name"
+                      type="text"
+                      id="planname"
+                      name="planname"
+                      value={newPlan.planname}
+                      onChange={handleChange}
+                      aria-describedby="plannameHelpBlock"
+                    />
+
+                    <small id="plannameHelpBlock" className="form-text text-muted" style={{ lineHeight: "1" }}>
+                      Your plan name should be a scenario that you quickly and easily recognize like "sketchy place" or
+                      "walking home alone"
+                    </small>
+                  </div>
+                </Col>
+              </Row>
+              <hr />
+              <small className="mr-3 text-muted" style={{ lineHeight: "1" }}>
+                Assign a default duration for your plan to "watch" before sending a flare. You can also specify a
+                date/time to begin watching.
+              </small>
+              <Row>
+                <Col>
+                  <div className="form-group" style={{ margin: "10px 0 10px 0" }}>
+                    <Form.Control
+                      type="text"
+                      id="durationBeforeExecution"
+                      name="durationBeforeExecution"
+                      style={{ width: "100%" }}
+                      placeholder="Number of Minutes before sending a Flare"
+                      value={newPlan.durationBeforeExecution}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div className="form-group" style={{ margin: "10px 0 10px 0" }}>
+                    <DateTimePickerComponent
+                      id="activatestart"
+                      name="activatestart"
+                      strictMode="true"
+                      // key={`dateTimePicker-1-${props.plan.id}`}
+                      // planid={`planid-datepicker-activatestart-${props.plan.id}`
+                      step="15"
+                      min={new Date()}
+                      placeholder="Select Start Date &amp; Time."
+                      // value={selectedPlan.activatestart}
+                      onChange={handleChange}
+                      onSelect={handleChange}
+                      onBlur={handleChange}
+                      onClick={handleChange}
+                      onSubmit={handleChange}
+                      aria-describedby="activatestartHelpBlock"
+                    />
+                  </div>
+                  <small id="watchtimeHelpBlock" className="form-text text-muted">
+                    This is the time when your plan should start "watching"
                   </small>
                 </Col>
               </Row>
 
-              <small className="ml-3 mr-3 text-muted">
-                Assign a default time limit for your plan. Once you kick it off and after the time you specify below,
-                your plan will alert your group of contacts will the template you've specified...
-              </small>
-              <Row>
-                <Col>
-                  <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>
-                      <small>Days</small>
+              <div>
+                {state.templates !== null && state.templates.length > 0 ? (
+                  <Form.Group controlid="exampleForm.ControlSelect2">
+                    <Form.Label className="small text-muted">
+                      Select the template this Plan should use if a Flare has to be sent up.
                     </Form.Label>
-                    <Form.Control as="select" name="days" onChange={handleChange} value={newPlan.days}>
-                      <option>0</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
-                      <option>12</option>
-                      <option>13</option>
-                      <option>14</option>
-                      <option>15</option>
-                      <option>16</option>
-                      <option>17</option>
-                      <option>18</option>
-                      <option>19</option>
-                      <option>20</option>
-                      <option>21</option>
-                      <option>22</option>
-                      <option>23</option>
-                      <option>24</option>
-                      <option>25</option>
-                      <option>26</option>
-                      <option>27</option>
-                      <option>28</option>
-                      <option>29</option>
-                      <option>30</option>
+                    <Form.Control as="select" name="templates" value={newPlan.templates} onChange={handleMultiChange}>
+                      {state.templates.map(template => {
+                        return (
+                          <option key={`template-${template.id}`} value={template.id}>
+                            {template.nickname}
+                          </option>
+                        );
+                      })}
                     </Form.Control>
                   </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>
-                      <small>Hours</small>
+                ) : (
+                  <p className="small">
+                    <Link to="/templates">Create a template</Link> first and then come back here to assign it to your
+                    plan.
+                  </p>
+                )}
+              </div>
+
+              <div>
+                {state.groups !== null && state.groups.length > 0 ? (
+                  <Form.Group controlid="exampleForm.ControlSelect2">
+                    <Form.Label className="small text-muted">
+                      Select all Groups this Plan should send the assigned flare to. (e.g. CMD or CTRL + Click)
                     </Form.Label>
-                    <Form.Control as="select" name="hours" onChange={handleChange} value={newPlan.hours}>
-                      <option>0</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>4</option>
-                      <option>6</option>
-                      <option>8</option>
-                      <option>10</option>
-                      <option>13</option>
-                      <option>16</option>
-                      <option>19</option>
-                      <option>21</option>
+                    <Form.Control
+                      as="select"
+                      multiple
+                      name="groups"
+                      value={newPlan.groups}
+                      onChange={handleMultiChange}
+                    >
+                      {state.groups.map(group => {
+                        return (
+                          <option key={`group-${group.id}`} value={group.id}>
+                            {group.groupname}
+                          </option>
+                        );
+                      })}
                     </Form.Control>
                   </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>
-                      <small>Minutes</small>
-                    </Form.Label>
-                    <Form.Control as="select" name="minutes" onChange={handleChange} value={newPlan.minutes}>
-                      <option>0</option>
-                      <option>5</option>
-                      <option>10</option>
-                      <option>15</option>
-                      <option>30</option>
-                      <option>45</option>
-                      <option>55</option>
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
-              </Row>
+                ) : (
+                  <p className="small">
+                    <Link to="/groups">Create a group</Link> first and then assign your contacts to them.
+                  </p>
+                )}
+              </div>
+
               <div className="submitBtn">
                 <button
                   className="submit-btn e-btn btn btn-lg btn-block"
@@ -246,7 +331,13 @@ const AddPlan = () => {
                 </button>
               </div>
             </Form>
-            <div id="confirmationDialog" />{" "}
+            <div id="confirmationDialog" /> <div id="confirmationDialog" />{" "}
+            <MyVerticallyCenteredModal
+              show={showPlanAddModal}
+              onHide={() => {
+                setShowPlanAddModal(false);
+              }}
+            />
           </div>
         </div>
       </div>

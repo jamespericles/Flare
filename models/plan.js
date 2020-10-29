@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: { allowNull: false }
+        foreignKey: { allowNull: false },
       });
       this.belongsToMany(models.Template, { through: models.TemplatePlans });
       this.belongsToMany(models.Group, { through: models.GroupPlans });
@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       durationBeforeExecution: DataTypes.INTEGER,
       activatestart: DataTypes.DATE,
       activateend: DataTypes.DATE,
-      executeplan: DataTypes.BOOLEAN
+      executeplan: DataTypes.BOOLEAN,
     },
     {
       sequelize,
-      modelName: "Plan"
+      modelName: "Plan",
     }
   );
 

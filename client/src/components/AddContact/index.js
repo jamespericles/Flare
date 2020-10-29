@@ -1,5 +1,6 @@
 // Component to hold a contact addition/creation form; functionality for adding a contact
 import axios from "axios";
+import ReactDOM from "react-dom";
 import React, { useState } from "react";
 import { LOADING, SAVE_CONTACT } from "../../store/actions";
 import { useStoreContext } from "../../store/store";
@@ -9,13 +10,13 @@ import ModalBody from "react-bootstrap/ModalBody";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
+import InputMask from "react-input-mask";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
+import { SET_CONTACTS } from "../../store/actions";
 
 const AddContact = () => {
   const [state, dispatch] = useStoreContext();
-
   const [newContact, setNewContact] = useState({
     firstname: "",
     lastname: "",
@@ -23,10 +24,6 @@ const AddContact = () => {
     relationship: "",
     email: "",
     mobile: "",
-    mobilecc: +1,
-    mobileac: "",
-    mobilefirst: "",
-    mobilelast: "",
     groups: []
   });
 
@@ -36,12 +33,9 @@ const AddContact = () => {
 
   // Handles updating the new contact whenever a change event or keytroke occurs.
   const handleChange = event => {
-    // Sets a generic name and value so that newContact updates whenever any field is updated,
-    // and updates the field being with the current value of that field.
     const { name, value } = event.target;
-    console.log(name, value);
     setNewContact({ ...newContact, [name]: value });
-    // checkSubmit();
+    console.log("newContact on HandleChange", newContact);
   };
 
   const handleMultiChange = event => {
@@ -57,8 +51,7 @@ const AddContact = () => {
     // Prevents page refresh thereby losing info
     event.preventDefault();
     dispatch({ type: LOADING });
-    const compiledMobile = newContact.mobilecc + newContact.mobileac + newContact.mobilefirst + newContact.mobilelast;
-    setNewContact({ ...newContact, mobile: compiledMobile });
+
     axios
       .post(`/api/contacts/add/${state.user.id}`, {
         firstname: newContact.firstname,
@@ -66,7 +59,7 @@ const AddContact = () => {
         nickname: newContact.nickname,
         relationship: newContact.relationship,
         email: newContact.email,
-        mobile: newContact.mobile,
+        mobile: newContact.mobile.replaceAll("[()\\s-]+", ""),
         UserId: state.user.id,
         groups: newContact.groups
       })
@@ -88,7 +81,23 @@ const AddContact = () => {
       email: "",
       mobile: ""
     });
+    loadContacts();
   };
+
+  function loadContacts() {
+    axios
+      .get(`/api/contacts/getall/${state.user.id}`)
+      .then(response => {
+        if (response.status === 200) {
+          console.log("loadContacts() from ListCotacts.js has run:", response.data.contacts);
+          dispatch({ type: SET_CONTACTS, contacts: response.data.contacts });
+        }
+      })
+      .catch(error => {
+        console.log({ message: error.message });
+        console.log(error);
+      });
+  }
 
   function MyVerticallyCenteredModal(props) {
     return (
@@ -113,154 +122,118 @@ const AddContact = () => {
         <div className="validation_wrapper">
           <div className="control_wrapper" id="control_wrapper">
             <form id="addContact" method="post">
-              <div className="form-group" style={{ margin: "10px 0 10px 0" }}>
-                <div className="e-float-input">
-                  <input
-                    type="text"
-                    id="firstname"
-                    name="firstname"
-                    style={{ width: "100%" }}
-                    placeholder="First Name"
-                    value={newContact.firstname}
-                    onChange={handleChange}
-                  />
-                  <span className="e-float-line" />
+              <div className="row">
+                <div className="col">
+                  <div className="form-group" style={{ margin: "10px 0 10px 0" }}>
+                    <div className="e-float-input">
+                      <input
+                        type="text"
+                        id="firstname"
+                        name="firstname"
+                        style={{ width: "100%" }}
+                        placeholder="First Name"
+                        value={newContact.firstname}
+                        onChange={handleChange}
+                      />
+                      <span className="e-float-line" />
+                    </div>
+                  </div>
                 </div>
-                <div id="firstnameError" />
-              </div>
-              <div className="form-group" style={{ margin: "0 0 10px 0" }}>
-                <div className="e-float-input">
-                  <input
-                    type="text"
-                    id="lastname"
-                    name="lastname"
-                    style={{ width: "100%" }}
-                    placeholder="Last Name"
-                    value={newContact.lastname}
-                    onChange={handleChange}
-                  />
-                  <span className="e-float-line" />
+                <div className="col">
+                  <div className="form-group" style={{ margin: "10px 0 10px 0" }}>
+                    <div className="e-float-input">
+                      <input
+                        type="text"
+                        id="lastname"
+                        name="lastname"
+                        style={{ width: "100%" }}
+                        placeholder="Last Name"
+                        value={newContact.lastname}
+                        onChange={handleChange}
+                      />
+                      <span className="e-float-line" />
+                    </div>
+                  </div>
                 </div>
-                <div id="lastnameError" />
               </div>
-              <div className="form-group" style={{ margin: "0 0 10px 0" }}>
-                <div className="e-float-input">
-                  <input
-                    type="text"
-                    id="nickname"
-                    name="nickname"
-                    style={{ width: "100%" }}
-                    placeholder="Nickname"
-                    value={newContact.nickname}
-                    onChange={handleChange}
-                  />
+              <div className="row">
+                <div className="col">
+                  <div className="form-group" style={{ margin: "0 0 10px 0" }}>
+                    <div className="e-float-input">
+                      <input
+                        type="text"
+                        id="nickname"
+                        name="nickname"
+                        style={{ width: "100%" }}
+                        placeholder="Nickname"
+                        value={newContact.nickname}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div id="nicknameError" />
-              </div>
-              <div className="form-group" style={{ margin: "0 0 10px 0" }}>
-                <div className="e-float-input">
-                  <input
-                    type="text"
-                    id="relationship"
-                    name="relationship"
-                    style={{ width: "100%" }}
-                    placeholder="Relationship (e.g. Father, Boyfriend, Neighbor)"
-                    value={newContact.relationship}
-                    onChange={handleChange}
-                  />
+                <div className="col">
+                  <div className="form-group" style={{ margin: "0 0 10px 0" }}>
+                    <div className="e-float-input">
+                      <input
+                        type="text"
+                        id="relationship"
+                        name="relationship"
+                        style={{ width: "100%" }}
+                        placeholder="Relationship"
+                        value={newContact.relationship}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div id="relationshipError" />
               </div>
-              <div className="form-group" style={{ margin: "30px 0 25px 0" }}>
-                <Form.Row>
-                  <p className="small text-muted ml-1 mr-5">
-                    Mobile Phone <br />
-                    (e.g. 336-555-9190)
-                  </p>
-                  <br />
-                  <Col>
-                    <Form.Control
-                      inline
-                      controlId="mobileac"
-                      type="text"
-                      htmlsize="3"
-                      name="mobileac"
+              <div className="row">
+                <div className="col">
+                  <div
+                    className="form-group"
+                    style={{ margin: "0 0 10px 0", borderBottom: "1px solid rgba(0, 0, 0, 0.42)" }}
+                  >
+                    <InputMask
+                      className="text-muted mt-3 mr-0 pr-0"
+                      id="mobile"
+                      name="mobile"
+                      style={{
+                        border: "none",
+                        width: "100%",
+                        fontSize: "90%",
+                        paddingTop: "7px"
+                      }}
+                      placeholder="Mobile"
+                      value={newContact.mobile}
                       onChange={handleChange}
-                      value={newContact.mobileac}
-                      placeholder="***"
+                      mask="1 999 999 9999"
                     />
-                  </Col>
-                  <Col>
-                    <Form.Control
-                      inline
-                      controlId="mobilefirst"
-                      type="text"
-                      htmlsize="3"
-                      name="mobilefirst"
-                      onChange={handleChange}
-                      value={newContact.mobilefirst}
-                      placeholder="***"
-                    />
-                  </Col>
-                  <Col>
-                    <Form.Control
-                      inline
-                      controlId="mobilelast"
-                      type="text"
-                      htmlsize="4"
-                      name="mobilelast"
-                      onChange={handleChange}
-                      value={newContact.mobilelast}
-                      placeholder="****"
-                    />
-                  </Col>
-                </Form.Row>
-              </div>
-              <div className="form-group" style={{ margin: "0 0 10px 0" }}>
-                <div className="e-float-input">
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    style={{ width: "100%" }}
-                    placeholder="Email address"
-                    value={newContact.email}
-                    onChange={handleChange}
-                  />
+                  </div>
                 </div>
-                <div id="emailError" />
-              </div>
-              <div className="form-group" style={{ margin: "0 0 10px 0" }}>
-                <div className="e-float-input">
-                  <input
-                    type="text"
-                    id="mobile"
-                    name="mobile"
-                    noValidate
-                    style={{ width: "100%" }}
-                    placeholder="Mobile Phone"
-                    value={newContact.mobile}
-                    onChange={handleChange}
-                  />
+                <div className="col">
+                  <div className="form-group" style={{ margin: "0 0 10px 0" }}>
+                    <div className="e-float-input">
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        style={{ width: "100%" }}
+                        placeholder="Email address"
+                        value={newContact.email}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div id="mobileError" />
               </div>
-              <div className="form-group" style={{ margin: "0 0 10px 0" }}>
-                <div className="e-float-input">
-                  <input
-                    type="text"
-                    id="GroupId"
-                    name="GroupId"
-                    style={{ width: "100%" }}
-                    placeholder="Select all Groups this Contact should be included in"
-                    value={newContact.GroupId}
-                    onChange={handleChange}
-                  />
-                </div>
+
+              <div>
                 {state.groups !== null && state.groups.length > 0 ? (
-                  <Form.Group controlId="exampleForm.ControlSelect2">
-                    <p className="small text-muted">Multi-Select Group Assignment. (e.g. CMD or CTRL + Click)</p>
-                    <Form.Label>Example multiple select</Form.Label>
+                  <Form.Group controlid="exampleForm.ControlSelect2">
+                    <Form.Label className="small text-muted">
+                      Select all Groups this Contact should be included in. (e.g. CMD or CTRL + Click)
+                    </Form.Label>
                     <Form.Control
                       as="select"
                       multiple

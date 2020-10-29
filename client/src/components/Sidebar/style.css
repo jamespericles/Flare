@@ -3,6 +3,15 @@
 @import "../../../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
 /* main content area styles */
 
+.profileLink {
+  color: #e8c547;
+}
+
+.profileLink:hover {
+  color: #00a8ba;
+  text-decoration: none;
+}
+
 .sidebarLinks {
   text-decoration: none;
   font-size: 160%;
@@ -17,7 +26,7 @@ ul > a > span:hover {
 
 ul {
   list-style-type: none;
-  padding-left: 20px;
+  padding-left: 15px;
   padding-top: 20px;
 }
 
@@ -99,7 +108,7 @@ body {
 }
 
 #head .header {
-  text-align: center;
+  text-align: right;
   height: 50px;
   line-height: 50px;
   font-size: 18px;

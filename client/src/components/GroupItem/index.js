@@ -60,7 +60,7 @@ export default function GroupItem(props) {
               onClick={() => deleteItem(state.user.id, props.group.id)}
             >
               <IconContext.Provider
-                value={{ size: "1em", style: { verticalAlign: "text-top", color: "red", textAlign: "right" } }}
+                value={{ size: "1em", style: { verticalAlign: "text-top", color: "black", textAlign: "right" } }}
               >
                 <MdRemoveCircle />
               </IconContext.Provider>

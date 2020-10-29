@@ -21,8 +21,8 @@ router.get("/getallbyuser/:userid", async (req, res) => {
   groups = await Group.findAll({
     // based on the user id in the params of the api
     where: {
-      UserId: req.params.userid
-    }
+      UserId: req.params.userid,
+    },
   });
   // if the user id in the params exists...
   if (groups) {
@@ -46,8 +46,8 @@ router.get("/getallbycontact/:userid/:contactid", async (req, res) => {
     // based on the user id in the params of the api
     where: {
       UserId: req.params.userid,
-      contacts: req.params.contactid
-    }
+      contacts: req.params.contactid,
+    },
   });
   // if the user id in the params exists...
   if (groups) {
@@ -71,8 +71,8 @@ router.get("/getallbyplan/:userid/:planid", async (req, res) => {
     // based on the user id in the params of the api
     where: {
       UserId: req.params.userid,
-      plans: req.params.planid
-    }
+      plans: req.params.planid,
+    },
   });
   // if the user id in the params exists...
   if (groups) {
@@ -96,8 +96,8 @@ router.get("/getone/:userid/:groupname", async (req, res) => {
     // based on the contact nickname in the params of the api
     where: {
       groupname: req.params.groupname,
-      UserId: req.params.userid
-    }
+      UserId: req.params.userid,
+    },
   });
   // if the user id in the params exists...
   if (group) {
@@ -118,12 +118,12 @@ router.post("/add/:userid", async function (req, res) {
   group = await Group.findOrCreate({
     where: {
       UserId: req.params.userid,
-      groupname: req.body.groupname
+      groupname: req.body.groupname,
     },
     defaults: {
       groupname: req.body.groupname,
-      UserId: req.params.userid
-    }
+      UserId: req.params.userid,
+    },
   });
   if (group) {
     res.json({ group });
@@ -140,21 +140,21 @@ router.put("/update/:userid/:groupid", async function (req, res) {
   group = await Group.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.groupid
-    }
+      id: req.params.groupid,
+    },
   });
   if (group) {
     try {
       group = await Group.update(
         {
           id: req.params.groupid,
-          UserId: req.params.userid
+          UserId: req.params.userid,
         },
         {
           where: {
             UserId: req.params.userid,
-            id: req.params.groupid
-          }
+            id: req.params.groupid,
+          },
         }
       );
       return res.send(group);
@@ -173,16 +173,16 @@ router.delete("/delete/:userid/:groupid", async function (req, res) {
   group = await Group.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.groupid
-    }
+      id: req.params.groupid,
+    },
   });
   if (group) {
     try {
       await Group.destroy({
         where: {
           UserId: req.params.userid,
-          id: req.params.groupid
-        }
+          id: req.params.groupid,
+        },
       });
       return res.json({ status: "ok" });
     } catch (err) {
@@ -195,14 +195,18 @@ router.delete("/delete/:userid/:groupid", async function (req, res) {
 
 router.put("/:groupId/contact/:contactId", async (req, res) => {
   const group = await Group.findOne({ where: { id: req.params.groupId } });
-  const contact = await Contact.findOne({ where: { id: req.params.contactId } });
+  const contact = await Contact.findOne({
+    where: { id: req.params.contactId },
+  });
 
   if (group && contact) {
     contact.addGroup(group);
-    res.json({ status: 'ok' });
+    res.json({ status: "ok" });
   }
 
-  res.status(404).json({ status: 'error', message: "Group or Contact not found" });
+  res
+    .status(404)
+    .json({ status: "error", message: "Group or Contact not found" });
 });
 
 //* MODULE EXPORTS ********************************

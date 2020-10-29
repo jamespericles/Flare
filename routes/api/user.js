@@ -17,8 +17,8 @@ router.get("/", async (req, res) => {
   if (req.user) {
     const user = await User.findOne({
       where: {
-        id: req.user.id
-      }
+        id: req.user.id,
+      },
     });
 
     if (user) {
@@ -39,28 +39,30 @@ router.post("/signup", async function (req, res, next) {
   let user = {};
   user = await User.findOne({
     where: {
-      email: req.body.email
-    }
+      email: req.body.email,
+    },
   });
 
   if (user) {
     res.status(400).json({
-      message: `Sorry, a user is already using that email: ${req.body.email}`
+      message: `Sorry, a user is already using that email: ${req.body.email}`,
     });
     return;
   }
   const salt = crypto.randomBytes(64).toString("hex");
-  const password = crypto.pbkdf2Sync(req.body.password, salt, 10000, 64, "sha512").toString("base64");
+  const password = crypto
+    .pbkdf2Sync(req.body.password, salt, 10000, 64, "sha512")
+    .toString("base64");
   if (!isValidPassword(req.body.password)) {
     return res.status(400).json({
       status: "error",
-      message: "Password must be 8 or more characters."
+      message: "Password must be 8 or more characters.",
     });
   }
   if (!isValidEmail(req.body.email)) {
     return res.status(400).json({
       status: "error",
-      message: "Email address not formed correctly."
+      message: "Email address not formed correctly.",
     });
   }
   try {
@@ -75,7 +77,7 @@ router.post("/signup", async function (req, res, next) {
       zip: req.body.zip,
       mobile: req.body.mobile,
       password: password,
-      salt: salt
+      salt: salt,
     });
   } catch (err) {
     return res.json({ status: "error", message: err.message });
@@ -135,21 +137,23 @@ router.put("/update/:userid", async function (req, res) {
   let user = {};
   user = await User.findOne({
     where: {
-      id: req.params.userid
-    }
+      id: req.params.userid,
+    },
   });
   const salt = crypto.randomBytes(64).toString("hex");
-  const password = crypto.pbkdf2Sync(req.body.password, salt, 10000, 64, "sha512").toString("base64");
+  const password = crypto
+    .pbkdf2Sync(req.body.password, salt, 10000, 64, "sha512")
+    .toString("base64");
   if (!isValidPassword(req.body.password)) {
     return res.status(400).json({
       status: "error",
-      message: "Password must be 8 or more characters."
+      message: "Password must be 8 or more characters.",
     });
   }
   if (!isValidEmail(req.body.email)) {
     return res.status(400).json({
       status: "error",
-      message: "Email address not formed correctly."
+      message: "Email address not formed correctly.",
     });
   }
   if (user) {
@@ -167,12 +171,12 @@ router.put("/update/:userid", async function (req, res) {
           zip: req.body.zip,
           mobile: req.body.mobile,
           password: password,
-          salt: salt
+          salt: salt,
         },
         {
           where: {
-            id: req.params.userid
-          }
+            id: req.params.userid,
+          },
         }
       );
       return res.send(user);

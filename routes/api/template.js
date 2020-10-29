@@ -16,8 +16,8 @@ router.get("/getallbyuser/:userid", async (req, res) => {
   templates = await Template.findAll({
     // based on the user id in the params of the api
     where: {
-      UserId: req.params.userid
-    }
+      UserId: req.params.userid,
+    },
   });
   // if the user id in the params exists...
   if (templates) {
@@ -41,8 +41,8 @@ router.get("/getallbycontact/:userid/:contactid", async (req, res) => {
     // based on the user id in the params of the api
     where: {
       contacts: req.params.contactid,
-      UserId: req.params.userid
-    }
+      UserId: req.params.userid,
+    },
   });
   // if the user id in the params exists...
   if (templates) {
@@ -66,8 +66,8 @@ router.get("/getallbygroup/:userid/:groupid", async (req, res) => {
     // based on the user id in the params of the api
     where: {
       groups: req.params.groupid,
-      UserId: req.params.userid
-    }
+      UserId: req.params.userid,
+    },
   });
   // if the user id in the params exists...
   if (templates) {
@@ -91,8 +91,8 @@ router.get("/getallbyplan/:userid/:planid", async (req, res) => {
     // based on the user id in the params of the api
     where: {
       UserId: req.params.userid,
-      plans: req.params.planid
-    }
+      plans: req.params.planid,
+    },
   });
   // if the user id in the params exists...
   if (templates) {
@@ -116,8 +116,8 @@ router.get("/getone/:userid/:nickname", async (req, res) => {
     // based on the contact nickname in the params of the api
     where: {
       UserId: req.params.userid,
-      nickname: req.params.nickname
-    }
+      nickname: req.params.nickname,
+    },
   });
   // if the user id in the params exists...
   if (template) {
@@ -139,7 +139,7 @@ router.post("/add/:userid", async function (req, res) {
   template = await Template.findOrCreate({
     where: {
       UserId: req.params.userid,
-      nickname: req.body.nickname
+      nickname: req.body.nickname,
     },
     defaults: {
       nickname: req.body.nickname,
@@ -147,8 +147,8 @@ router.post("/add/:userid", async function (req, res) {
       UserId: req.body.users,
       contacts: req.body.contacts,
       groups: req.body.groups,
-      plans: req.body.plans
-    }
+      plans: req.body.plans,
+    },
   });
   if (template) {
     res.json({ template });
@@ -165,8 +165,8 @@ router.put("/update/:userid/:templateid", async function (req, res) {
   template = await Template.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.templateid
-    }
+      id: req.params.templateid,
+    },
   });
   if (template) {
     try {
@@ -178,13 +178,13 @@ router.put("/update/:userid/:templateid", async function (req, res) {
           UserId: req.params.userid,
           contacts: req.body.contacts,
           groups: req.body.groups,
-          plans: req.body.plans
+          plans: req.body.plans,
         },
         {
           where: {
             UserId: req.params.userid,
-            id: req.params.templateid
-          }
+            id: req.params.templateid,
+          },
         }
       );
       return res.send(contact);
@@ -203,16 +203,16 @@ router.delete("/delete/:userid/:templateid", async function (req, res) {
   template = await Template.findOne({
     where: {
       UserId: req.params.userid,
-      id: req.params.templateid
-    }
+      id: req.params.templateid,
+    },
   });
   if (template) {
     try {
       await Template.destroy({
         where: {
           UserId: req.params.userid,
-          id: req.params.templateid
-        }
+          id: req.params.templateid,
+        },
       });
       return res.json({ status: "ok" });
     } catch (err) {

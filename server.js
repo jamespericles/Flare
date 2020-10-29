@@ -37,26 +37,24 @@ app.use(pino); //TWILIO
 let connection;
 
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  connection = mysql.createConnection({
-    host: process.env.JAWSDB_URL
-  });
-} else {
-  connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_DB
-  });
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("client/build"));
+//   connection = mysql.createConnection(process.env.JAWSDB_URL);
+// } else {
+connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_DB,
+});
+// }
 
 // Setting up session variable expiration
 const sessionStore = new MySQLStore(
   {
     checkExpirationInterval: parseInt(process.env.DB_CHECK_EXP_INTERVAL, 10),
-    expiration: parseInt(process.env.DB_EXPIRATION, 10)
+    expiration: parseInt(process.env.DB_EXPIRATION, 10),
   },
   connection
 );
@@ -70,7 +68,7 @@ app.use(
     saveUninitialized: true,
     secret: process.env.DB_SECRET,
     store: sessionStore,
-    cookie: { expires: expireDate }
+    cookie: { expires: expireDate },
   })
 );
 app.use(passport.initialize());
